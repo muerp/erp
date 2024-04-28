@@ -1,5 +1,11 @@
 import { MenuItem } from "./interface";
 
+export enum LoadingState {
+    loading = 1,
+    success = 2,
+    error = 3
+}
+
 export const defaultMenus: MenuItem[] = [
     {
         icon: 'set',
@@ -295,12 +301,14 @@ export const testTables = {
                     "label": "状态2"
                 }
             ],
-            "key": "key1"
+            "key": "key1",
+            require: true,
         },
         {
             "type": 2,
             label: '显示',
-            "key": "key2"
+            "key": "key2",
+            require: true,
         },
         {
             "type": 3,
@@ -312,17 +320,20 @@ export const testTables = {
             "type": 4,
             width: 180,
             label: '时间',
-            "key": "key4"
+            "key": "key4",
+            require: true,
         },
         {
             "type": 5,
             label: '图标',
-            "key": "key5"
+            "key": "key5",
+            require: true,
         },
         {
             "type": 6,
             label: '状态',
             "key": "key6",
+            require: true,
             map: {
                 1: {
                     label: '成功',
@@ -372,3 +383,16 @@ export const testTables = {
         }
     ]
 }
+
+export const SystemIcons = [
+    'add',    'admin',    'authority',
+    'bumen',  'clock',    'close',
+    'col',    'collapse', 'collapsed',
+    'copy',   'export',   'github',
+    'gongsi', 'group',    'import',
+    'jiagou', 'members',  'modify',
+    'moon',   'reset',    'rizhi',
+    'search', 'set',      'sun',
+    'tab',    'trash',    'tree',
+    'tree1',  'user',     'yh'
+]

@@ -26,12 +26,23 @@
   </span>
   <table-icon v-else-if="header.type === HeaderType.icon" :src="data[header.key]">
   </table-icon>
-  <el-tag v-else-if="header.type === HeaderType.state" :type="header.map[data[header.key]].type"  :disable-transitions="true">
+  <el-tag
+    v-else-if="header.type === HeaderType.state"
+    :type="header.map[data[header.key]].type"
+    :disable-transitions="true"
+  >
     {{ header.map[data[header.key]].label }}
   </el-tag>
   <div class="table-opas w-full" v-else-if="header.type === HeaderType.opa">
-    <el-button :class="{'opa-text': config.buttonType==='text'}" v-for="item in header.buttons" :type="ButtonTypeConfig[item.type].type" :text="config.buttonType==='text'" :round="config.buttonType==='round'" :plain="config.buttonType==='plain'">
-        {{ ButtonTypeConfig[item.type].label }}
+    <el-button
+      :class="{ 'opa-text': config.buttonType === 'text' }"
+      v-for="item in header.buttons"
+      :type="ButtonTypeConfig[item.type].type"
+      :text="config.buttonType === 'text'"
+      :round="config.buttonType === 'round'"
+      :plain="config.buttonType === 'plain'"
+    >
+      {{ ButtonTypeConfig[item.type].label }}
     </el-button>
   </div>
 </template>
@@ -66,22 +77,22 @@ defineComponent({
   }
 }
 .table-opas {
-    .el-button {
-        height: 24px;
-        font-size: 12px;
-        margin: 0 6px;
-    }
-    .opa-text {
-        margin: 0;
-        text-decoration: underline;
-        padding: 3px 10px;
-        &:hover {
-            opacity: 0.7;
-        }
-        &.is-text:not(.is-disabled):active {
-            background-color: transparent;
-            color: #fff;
-        }
-    }
+  .el-button {
+    height: 24px;
+    font-size: 12px;
+    margin: 0 6px;
+  }
+}
+.opa-text {
+  margin: 0;
+  text-decoration: underline;
+  padding: 3px 10px;
+  &:hover {
+    opacity: 0.7;
+  }
+  &.is-text:not(.is-disabled):active {
+    background-color: transparent;
+    color: #fff;
+  }
 }
 </style>

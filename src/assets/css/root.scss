@@ -25,6 +25,7 @@ body, html {
     --el-empty-color: #3c3c3c;
     --el-menu-item-height: 48px;
     --el-text-color-secondary: #ccc;
+    --el-fill-color: #444;
 
     --el-font-size-base: 12px;
 
@@ -95,4 +96,7 @@ body, html {
 }
 .no-wrap {
     flex-wrap: nowrap;
+}
+.el-loading-spinner .el-loading-text {
+    font-size: 12px;
 }

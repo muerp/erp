@@ -23,3 +23,10 @@ export const uint8ArrayToString = (bytes: any) => {
     }
     return dataString
 }
+
+export const isUrl = (url: string) => {
+    return /^\s*data:(?:[a-z]+\/[a-z0-9-+.]+(?:;[a-z-]+=[a-z0-9-]+)?)?(?:;base64)?,([a-z0-9!$&',()*+;=\-._~:@/?%\s]*?)\s*$/i.test(url);
+}
+export const isBase64 = (url: string) => {
+    return /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/.test(url);
+}
