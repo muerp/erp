@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import { defineProps, ref, watch } from "vue";
 import { SeartFrameType } from "../../home/utils/constants";
-import {tableStore} from '../useTable';
+import {fetchTableData, tableStore} from '../useTable';
 
 const form = ref([]);
 
@@ -81,6 +81,7 @@ const onSubmit = () => {
       }
     }
   });
+  fetchTableData();
 };
 const onReset = () => {
   form.value = [];

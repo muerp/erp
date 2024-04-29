@@ -3,11 +3,16 @@
     v-if="modelValue"
     class="new-table-data"
     title="新建数据"
-    :model-value="true"
+    v-model="showDialog"
     :width="520"
     @closed="onClose"
   >
-    <el-form :model="form">
+    <el-form
+      :model="form"
+      v-loading="isSubmitting"
+      element-loading-text="正在提交数据..."
+      element-loading-background="rgba(0, 0, 0, 0)"
+    >
       <el-form-item
         v-for="(header, idx) in tableStore.tables.headers"
         v-show="header.type !== HeaderType.opa"
@@ -83,7 +88,7 @@
                 <el-tab-pane label="我的" name="my">
                   <el-row
                     class="my-images"
-                    v-loading="imageStore.loadingState===LoadingState.loading"
+                    v-loading="imageStore.loadingState === LoadingState.loading"
                     empty-text="暂无数据"
                     element-loading-text="数据加载中..."
                     element-loading-background="rgba(0, 0, 0, 0)"
@@ -131,11 +136,7 @@
         </el-select>
       </el-form-item>
       <el-form-item class="create-opa">
-        <el-button
-          text
-          @click="() => {addVisible = false;}">
-          取消
-        </el-button>
+        <el-button text @click="handlerClose"> 取消 </el-button>
         <el-button type="primary" :disabled="!isValid" @click="onCreate">
           创建
         </el-button>
@@ -144,8 +145,8 @@
   </el-dialog>
 </template>
 <script lang="ts" setup>
-import { computed, defineComponent, ref } from "vue";
-import { tableStore } from "../useTable";
+import { computed, defineComponent, ref, watch } from "vue";
+import { tableDataStore, tableStore } from "../useTable";
 import TableIcon from "./TableIcon.vue";
 import { isUrl, isBase64 } from "../../../utils/utils";
 import { fetchImages, imageStore } from "../../../store";
@@ -154,7 +155,7 @@ import {
   ButtonTypeConfig,
   HeaderType,
   SystemIcons,
-  LoadingState
+  LoadingState,
 } from "../../home/utils/constants";
 defineComponent({
   components: {
@@ -162,7 +163,7 @@ defineComponent({
   },
 });
 
-defineProps({
+const props = defineProps({
   modelValue: { type: Boolean, default: false },
 });
 const emit = defineEmits(["update:modelValue"]);
@@ -188,8 +189,17 @@ const predefineColors = ref([
 ]);
 const iconDropRef = ref();
 const form = ref({});
+const isSubmitting = ref(false);
+const showDialog = ref(false);
+watch(
+  () => props.modelValue,
+  (val, old) => {
+    if (val !== old) {
+      showDialog.value = val;
+    }
+  }
+);
 const isValid = computed(() => {
-  console.log("--form.value-", form.value);
   for (let i = 0; i < tableStore.tables.headers.length; ++i) {
     const item = tableStore.tables.headers[i];
     if (item.require && item.type !== HeaderType.switch) {
@@ -198,6 +208,9 @@ const isValid = computed(() => {
   }
   return true;
 });
+const handlerClose = () => {
+  showDialog.value = false;
+};
 const onCurTime = (key: string) => {
   form.value[key] = new Date();
 };
@@ -224,7 +237,6 @@ const onChangeIconColor = (color, key) => {
   form.value[key].color = color;
 };
 const onTabChange = (name: string) => {
-  console.log("d-d--d-", name);
   if (name === "my") {
     fetchImages();
   }
@@ -237,8 +249,15 @@ const onCreate = () => {
       data[item.key] = item.type === HeaderType.time ? new Date(value).getTime() : value;
     }
   });
-  
-  console.log("--data--", data);
+  isSubmitting.value = true;
+  setTimeout(() => {
+    tableDataStore.datas.unshift(data);
+    isSubmitting.value = false;
+    setTimeout(() => {
+      form.value = {};
+      handlerClose();
+    }, 50);
+  }, 500);
 };
 const onUploadImage = () => {};
 </script>

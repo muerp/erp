@@ -23,5 +23,7 @@ import { isBase64, isUrl } from "../../../utils";
 <style lang="scss">
     .t-img {
         max-width: 60px;
+        display: inline-block;
+        vertical-align: -0.15em;
     }
 </style>

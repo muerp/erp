@@ -98,17 +98,29 @@ export const testMenus = [
             {
                 icon: 'rizhi',
                 title: '日志管理',
-                path: '/aa/ee',
+                // path: '/aa/ee',
+                children: [
+                    {
+                        icon: 'lr',
+                        title: '登陆日志',
+                        path: '/aa/ff',
+                    },
+                    {
+                        icon: 'or',
+                        title: '操作日志',
+                        path: '/aa/kk',
+                    }
+                ]
             },
         ]
     },
     {
         icon: 'authority',
-        title: '',
+        title: '安全管理',
         children: [
             {
                 icon: 'tree-table',
-                title: '',
+                title: '菜单设置',
                 path: '/dd',
             },
         ]

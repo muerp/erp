@@ -24,7 +24,7 @@
     <svg-icon icon="clock"></svg-icon
     >{{ moment(new Date(data[header.key])).format("YYYY-MM-DD HH:mm:ss") }}
   </span>
-  <table-icon v-else-if="header.type === HeaderType.icon" :src="data[header.key]">
+  <table-icon v-else-if="header.type === HeaderType.icon" :src="data[header.key].icon" :color="data[header.key].color">
   </table-icon>
   <el-tag
     v-else-if="header.type === HeaderType.state"
@@ -80,13 +80,13 @@ defineComponent({
   .el-button {
     height: 24px;
     font-size: 12px;
-    margin: 0 6px;
+    margin: 0 3px;
   }
 }
 .opa-text {
   margin: 0;
   text-decoration: underline;
-  padding: 3px 10px;
+  padding: 3px 4px;
   &:hover {
     opacity: 0.7;
   }

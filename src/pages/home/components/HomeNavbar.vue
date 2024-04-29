@@ -21,8 +21,6 @@
     <el-scrollbar class="navbar-list">
       <el-menu
         ref="menuRef"
-        class="el-menu-vertical-demo"
-        :default-active="'1-1'"
         :default-openeds="expands"
         :collapse="isCollapse"
         @open="handleOpen"
@@ -31,19 +29,19 @@
         <mu-menu
           v-for="(menu, index) in store.navs"
           :key="index"
+          :index="(index + 1).toString()"
           :menu="menu"
-          :index="index + 1"
         ></mu-menu>
       </el-menu>
     </el-scrollbar>
   </mu-dragable>
 </template>
 <script lang="ts" setup>
-import { defineComponent, onMounted, watch } from "vue";
+import { defineComponent, nextTick, onMounted, watch } from "vue";
 import { ref } from "vue";
 import MuMenu from "./Menu.vue";
 import { defaultMenus, testMenus } from "../utils/constants";
-import { store, formateMenus} from "../../../store/useNavStore";
+import { store, formateMenus } from "../../../store/useNavStore";
 import { useRoute } from "vue-router";
 const props = defineProps({
   isCollapse: { type: Boolean, default: false },
@@ -57,7 +55,7 @@ defineComponent({
 const menus = ref(defaultMenus);
 const dragable = ref();
 const menuRef = ref();
-const expands = ref<string[]>(["1"]);
+const expands = ref(["1"]);
 const isLoading = ref(true);
 const route = useRoute();
 onMounted(() => {
@@ -65,9 +63,43 @@ onMounted(() => {
     formateMenus(testMenus, undefined, route.path);
     store.navs = testMenus;
     isLoading.value = false;
+    nextTick(() => {
+      if (store.curNav) {
+        let parent = store.curNav.parent;
+        const pIds = []
+        while (parent) {
+          const idx = expands.value.findIndex((index: string) => index === parent.id);
+          if (idx === -1) {
+            pIds.unshift(parent.id);
+          }
+          parent = parent.parent;
+        }
+        pIds.forEach(id => {
+          menuRef.value.open(id);
+        })
+        expands.value.push(...pIds);
+      }
+    });
   }, 500);
 });
-
+// watch(
+//   () => store.curNav,
+//   (val, old) => {
+//     if (val !== old) {
+//       let parent = val.parent;
+//       console.log("--navs-", store.navs);
+//       while (parent) {
+//         const idx = expands.value.findIndex((index: string) => index === parent.id);
+//         if (idx === -1) {
+//           expands.value.push(parent.id);
+//           console.log("---", menuRef.value, parent.id);
+//           // menuRef.value.open(parent.id);
+//         }
+//         parent = parent.parent;
+//       }
+//     }
+//   }
+// );
 watch(
   () => props.isCollapse,
   () => {

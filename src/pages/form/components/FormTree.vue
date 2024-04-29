@@ -18,19 +18,20 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import {tableStore} from '../useTable';
+import {fetchTableData, tableStore} from '../useTable';
 const defaultProps = {
   children: 'children',
   label: 'label',
 }
-const emit = defineEmits(['change'])
 const searchValue = ref('');
 const defaultExpandedKeys = ref([]);
 onMounted(()=>{
+  if (tableStore.trees) {
     defaultExpandedKeys.value = tableStore.trees.map(item => item.id);
+  }
 })
 const handleNodeClick = (data) => {
-    emit('change', data);
+    fetchTableData();
 }
 </script>
 <style lang="scss">

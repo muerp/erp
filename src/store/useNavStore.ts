@@ -3,17 +3,18 @@ import { defaultMenus } from '@/pages/home/utils'
 import { reactive } from 'vue'
 
 export const store = reactive({
-  navs: defaultMenus,
-  tabs: [{title: '首页', path:'/'}],
-  curNav: undefined,
-  setCurNav(nav: any) {
-    this.curNav = nav;
-  }
+    navs: defaultMenus,
+    tabs: [{ title: '首页', path: '/' }],
+    curNav: undefined,
+    setCurNav(nav: any) {
+        this.curNav = nav;
+    }
 })
 
 export const formateMenus = (menus: any[], parent: any, curPath: string) => {
 
-    menus.forEach(menu => {
+    menus.forEach((menu, idx) => {
+        menu.id = (parent ? parent.id + '-' : '') + (idx + 1).toString();
         if (curPath === menu.path) {
             store.setCurNav(menu);
             if (store.tabs.findIndex(r => r.path === menu.path) === -1) {
@@ -22,7 +23,7 @@ export const formateMenus = (menus: any[], parent: any, curPath: string) => {
         }
         if (parent) {
             menu.parent = parent;
-        } 
+        }
         if (menu.children) {
             formateMenus(menu.children, menu, curPath);
         }
