@@ -13,10 +13,11 @@
 
 <table>
     <tr>
+        <td><img src="https://raw.githubusercontent.com/muerp/erp/main/document/login.png"/></td>
         <td><img src="https://raw.githubusercontent.com/muerp/erp/main/document/home.png"/></td>
-        <td><img src="https://raw.githubusercontent.com/muerp/erp/main/document/create.png"/></td>
     </tr>
     <tr>
+        <td><img src="https://raw.githubusercontent.com/muerp/erp/main/document/create.png"/></td>
         <td><img src="https://raw.githubusercontent.com/muerp/erp/main/document/table.png"/></td>
     </tr>
 </table>
