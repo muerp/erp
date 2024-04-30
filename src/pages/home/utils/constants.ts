@@ -1,6 +1,7 @@
 import { MenuItem } from "./interface";
 
 export enum LoadingState {
+    normal = 0,
     loading = 1,
     success = 2,
     error = 3
@@ -70,7 +71,7 @@ export const defaultMenus: MenuItem[] = [
 
     }
 ]
-export const testMenus = [
+export const testMenus: any[] = [
     {
         icon: 'set',
         title: '系统设置',
@@ -93,7 +94,7 @@ export const testMenus = [
             {
                 icon: 'tree1',
                 title: '菜单管理',
-                path: '/aa/aa',
+                path: '/edit',
             },
             {
                 icon: 'rizhi',

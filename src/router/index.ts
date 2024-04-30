@@ -2,15 +2,15 @@ import { getToken } from '../pages/auth/auth';
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-    {
-        name: 'EditorPage',
-        path: '/edit',
-        noAuth: true,
-        meta: {
-            title: '编辑页面',
-        },
-        component: () => import('../pages/edit/EditorPage.vue')
-    },
+    // {
+    //     name: 'EditorPage',
+    //     path: '/edit',
+    //     noAuth: true,
+    //     meta: {
+    //         title: '编辑页面',
+    //     },
+    //     component: () => import('../pages/edit/EditorPage.vue')
+    // },
     {
         name: 'LoginPage',
         path: '/login',
@@ -43,7 +43,16 @@ const routes = [
                     title: '首页',
                 },
                 component: () => import('../pages/form/FormPage.vue'),
-            }
+            },
+            {
+                name: 'EditorPage',
+                path: '/edit',
+                noAuth: true,
+                meta: {
+                    title: '菜单管理',
+                },
+                component: () => import('../pages/edit/EditorPage.vue')
+            },
         ]
     }
 ];

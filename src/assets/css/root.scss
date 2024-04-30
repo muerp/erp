@@ -30,6 +30,7 @@ body, html {
     --el-font-size-base: 12px;
 
     --mu-theme-color: #409eff;
+    --mu-font-szie: 12px;
 
     --header-height: 64px;
     --tags-height: 38px;
@@ -86,6 +87,7 @@ body, html {
     padding: 1rem;
     min-height: 100%;
     overflow: auto;
+    font-size: var(--mu-font-szie);
 }
 .el-text--high-color {
     color: #ccc;
