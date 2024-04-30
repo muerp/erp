@@ -144,6 +144,79 @@ export const testMenus: any[] = [
 
     }
 ]
+export const testNavs: any[] = [
+    {
+        icon: 'set',
+        title: '系统设置',
+        children: [
+            {
+                icon: 'jiagou',
+                title: '部门管理',
+                path: '/aa',
+            },
+            {
+                icon: 'bumen',
+                title: '岗位管理',
+                path: '/aa/cc',
+            },
+            {
+                icon: 'members',
+                title: '员工管理',
+                path: '/aa/dd',
+            },
+            {
+                icon: 'tree1',
+                title: '菜单管理',
+                path: '/edit',
+            },
+            {
+                icon: 'rizhi',
+                title: '日志管理',
+                // path: '/aa/ee',
+                children: [
+                    {
+                        icon: 'lr',
+                        title: '登陆日志',
+                        path: '/aa/ff',
+                    },
+                    {
+                        icon: 'or',
+                        title: '操作日志',
+                        path: '/aa/kk',
+                    }
+                ]
+            },
+        ]
+    },
+    {
+        icon: 'authority',
+        title: '安全管理',
+        children: [
+            {
+                icon: 'tree-table',
+                title: '菜单设置',
+                path: '/dd',
+            },
+        ]
+    },
+    {
+        icon: 'group',
+        title: '',
+        children: [
+            {
+                icon: 'admin',
+                title: '',
+                path: '/cc',
+            },
+            {
+                icon: 'user',
+                title: '',
+                path: '/cc/ff',
+            }
+        ]
+
+    }
+]
 export enum SeartFrameType {
     input = 1,
     select = 2,

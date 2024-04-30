@@ -6,26 +6,26 @@
           <el-text size="large" align="center">我的菜单</el-text>
         </el-row>
         <el-scrollbar>
-          <mu-tree class="erp-loading"
+          <mu-tree
+            class="erp-loading"
             :list="menuStore.menus"
             v-loading="menuStore.loadingState === LoadingState.loading"
             element-loading-text="加载中..."
             element-loading-background="rgba(0, 0, 0, 0.3)"
             v-model="activeItem"
+            @node-move="onMoveNode"
           >
             <template #default="{ data }">
-              <div class="d-flex align-center left-inner">
-                <svg-icon
-                  v-if="data.children && data.children.length > 0"
-                  class="tree-arrow"
-                  icon="arrow-right"
-                />
-                <div class="d-center tree-dot" v-else></div>
-                <svg-icon class="nav-icon" v-if="data.icon" :icon="data.icon"></svg-icon>
-                <span :class="{ 'tree-empty': !data.title }">{{
-                  data.title || "菜单名称"
-                }}</span>
-              </div>
+              <svg-icon
+                v-if="data.children && data.children.length > 0"
+                class="tree-arrow"
+                icon="arrow-right"
+              />
+              <div class="d-center tree-dot" v-else></div>
+              <svg-icon class="nav-icon" v-if="data.icon" :icon="data.icon"></svg-icon>
+              <span :class="{ 'tree-empty': !data.title }">
+                {{ data.title || "菜单名称" }}
+              </span>
             </template>
           </mu-tree>
         </el-scrollbar>
@@ -36,7 +36,7 @@
 </template>
 <script lang="ts" setup>
 import { defineComponent, onMounted, ref } from "vue";
-import { menuStore, getAllMenus } from "../../../store";
+import { menuStore, getAllMenus, moveMenu } from "../../../store";
 import { LoadingState } from "../../home/utils";
 import MuTree from "./Tree.vue";
 const activeItem = ref();
@@ -48,9 +48,9 @@ defineComponent({
 onMounted(() => {
   getAllMenus();
 });
-const onChangeItem = (item) => {
-  
-}
+const onMoveNode = (data) => {
+  moveMenu(data);
+};
 </script>
 
 <style lang="scss">
@@ -92,7 +92,7 @@ const onChangeItem = (item) => {
 }
 .erp-loading {
   .el-loading-spinner .circular {
-    --el-loading-spinner-size: 32px
+    --el-loading-spinner-size: 32px;
   }
 }
 </style>

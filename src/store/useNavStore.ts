@@ -1,4 +1,4 @@
-import { LoadingState, defaultMenus, testMenus } from './../pages/home/utils/constants';
+import { LoadingState, defaultMenus, testNavs } from './../pages/home/utils/constants';
 import { reactive } from 'vue'
 import { NavItem } from './interface';
 
@@ -21,7 +21,7 @@ export const store = reactive<{
 
 export const formateNavs = (menus: any[], parent: any, curPath: string) => {
     menus.forEach((menu, idx) => {
-        menu.id = (parent ? parent.id + '-' : '') + (idx + 1).toString();
+        menu.index = (parent ? parent.index + '-' : '') + (idx + 1).toString();
         if (curPath === menu.path) {
             store.setCurNav(menu);
             if (store.tabs.findIndex(r => r.path === menu.path) === -1) {
@@ -41,16 +41,16 @@ export const fetchNavsList = () => {
     store.loadingState = LoadingState.loading;
     return new Promise(resolve => {
         setTimeout(() => {
-            formateNavs(testMenus, undefined, location.pathname);
-            store.navs = testMenus;
+            formateNavs(testNavs, undefined, location.pathname);
+            store.navs = testNavs;
             const expand: string[] = []
             if (store.curNav) {
                 let parent = store.curNav.parent;
                 const pIds = []
                 while (parent) {
-                  const idx = expand.findIndex((index: string) => index === parent.id);
+                  const idx = expand.findIndex((index: string) => index === parent.index);
                   if (idx === -1) {
-                    pIds.unshift(parent.id);
+                    pIds.unshift(parent.index);
                   }
                   parent = parent.parent;
                 }

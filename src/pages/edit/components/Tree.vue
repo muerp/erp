@@ -1,10 +1,14 @@
 <template>
   <el-scrollbar>
-    <div class="erp-tree" :class="{'is-dragable': !!dragItem}">
-      <tree-node v-for="(item, idx) in list" :data="item" :key="idx" :index="idx + ''" 
-      @drag-start="onDragStart"
-      @drag-move="onDragMove"
-      @drag-end="onDragEnd"
+    <div class="erp-tree" :class="{ 'is-dragable': !!dragItem }">
+      <tree-node
+        v-for="(item, idx) in list"
+        :data="item"
+        :key="item.id"
+        :index="idx + ''"
+        @drag-start="onDragStart"
+        @drag-move="onDragMove"
+        @drag-end="onDragEnd"
       >
         <template #default="{ data, level }">
           <div
@@ -13,15 +17,32 @@
             @click="onClick(data)"
             @dblclick="onDouble(data)"
           >
-            <slot :data="data" :level></slot>
+            <div class="tree-content d-flex h-full flex-1 align-center">
+              <slot :data="data" :level></slot>
+            </div>
           </div>
         </template>
       </tree-node>
     </div>
   </el-scrollbar>
+  <div
+    class="erp-drag-tree"
+    v-if="dragItem && dragPos"
+    :style="{ left: dragPos.x + 20 + 'px', top: dragPos.y + 'px' }"
+  >
+    <tree-node :data="dragItem" index="0" :no-drag="true">
+      <template #default="{ data, level }">
+        <div class="tree-inner" :style="{ 'padding-left': indent * level + 'px' }">
+          <div class="tree-content d-flex h-full flex-1 align-center">
+            <slot :data="data" :level></slot>
+          </div>
+        </div>
+      </template>
+    </tree-node>
+  </div>
 </template>
 <script lang="ts" setup>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, onMounted, provide, ref, watch } from "vue";
 import TreeNode from "./TreeNode.vue";
 const props = defineProps({
   list: { type: Array, default: [] },
@@ -33,9 +54,12 @@ defineComponent({
     TreeNode,
   },
 });
-const emit = defineEmits(["update:modalvalue"]);
+const emit = defineEmits(["update:modalvalue", "node-move"]);
 const activeItem = ref();
 const dragItem = ref();
+const dragPos = ref();
+const refList = ref({});
+provide("refList", refList);
 onMounted(() => {
   activeItem.value = props.list[0];
 });
@@ -51,6 +75,9 @@ watch(
     if (old) {
       old.active = false;
     }
+    if (val) {
+      val.active = true;
+    }
     emit("update:modalvalue", val);
   }
 );
@@ -62,39 +89,103 @@ const onClick = (item) => {
 const onDouble = (item) => {
   emit("double-item", item);
 };
-const onDragStart = (e, data) => {
-  console.log('--start--', e, data)
-  dragItem.value = data;
+const onDragStart = ({target}) => {
+  dragItem.value = target;
 };
-const onDragMove = (e, data) => {
-  console.log('--move--', e, data)
-
+const curEnterItem = ref();
+watch(
+  () => curEnterItem.value,
+  (val, old) => {
+    if (old) {
+      old.enterType = "";
+    }
+  }
+);
+const onDragMove = ({target, offsetX, offsetY, index}) => {
+  if (!dragItem.value) return;
+  dragPos.value = {
+    x: offsetX,
+    y: offsetY,
+  };
+  const keys = Object.keys(refList.value);
+  keys.sort();
+  
+  for (let i = 0; i < keys.length; ++i) {
+    const key = keys[i];
+    const itemRef = refList.value[key];
+    const rect = itemRef.el.getBoundingClientRect();
+    const dy = Math.abs(offsetY - rect.top);
+    if (key.startsWith(index)) {
+      continue;
+    }
+    if (dy < 10) {
+      itemRef.data.enterType = "top";
+      curEnterItem.value = itemRef.data;
+      break;
+    }
+    const py = Math.abs(offsetY - rect.top - rect.height);
+    if (py < 10) {
+      if (
+        itemRef.data.expand &&
+        itemRef.data.children &&
+        itemRef.data.children.length > 0
+      ) {
+        continue;
+      }
+      itemRef.data.enterType = "bottom";
+      curEnterItem.value = itemRef.data;
+      break;
+    } else if (offsetY > rect.top && offsetY < rect.top + rect.height) {
+      itemRef.data.enterType = "center";
+      curEnterItem.value = itemRef.data;
+      break;
+    } else {
+      curEnterItem.value = undefined;
+    }
+  }
 };
 const onDragEnd = () => {
+  if (dragItem.value && curEnterItem.value) {
+    //移动
+    emit("node-move", {
+      item: dragItem.value,
+      parent: curEnterItem.value,
+      position: curEnterItem.value.enterType,
+    });
+    activeItem.value = dragItem.value;
+  }
   dragItem.value = undefined;
+  curEnterItem.value = undefined;
+  dragPos.value = undefined;
 };
 </script>
 <style lang="scss">
-.tree-inner {
-  display: flex;
-  align-items: center;
-  * {
-    user-select: none;
-  }
-}
 .drag-icon {
-  transition: opacity all .25s;
+  transition: opacity all 0.25s;
   opacity: 0;
   cursor: move;
-}
-.tree-inner {
-  padding: 8px 8px;
 }
 .is-dragable {
   .tree-item {
     &:hover {
       background-color: transparent;
     }
+  }
+}
+.erp-drag-tree {
+  position: fixed;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+  .tree-item {
+    padding-left: 8px;
+  }
+  .tree-content {
+    padding: 6px;
+  }
+  .nav-icon {
+    width: 16px;
   }
 }
 </style>

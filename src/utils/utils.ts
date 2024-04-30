@@ -23,7 +23,12 @@ export const uint8ArrayToString = (bytes: any) => {
     }
     return dataString
 }
-
+export const uuid = (): string => {
+    return 'xxxxxxxx4xxxyxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
 export const isUrl = (url: string) => {
     return /^\s*data:(?:[a-z]+\/[a-z0-9-+.]+(?:;[a-z-]+=[a-z0-9-]+)?)?(?:;base64)?,([a-z0-9!$&',()*+;=\-._~:@/?%\s]*?)\s*$/i.test(url);
 }
