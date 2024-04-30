@@ -1,6 +1,6 @@
 <template>
-  <el-row class="form-buttons">
-    <div v-for="(item, idx) in tableStore.buttons" :key="idx">
+  <el-row class="add-buttons">
+    <div v-for="(item, idx) in editorStore.buttons" :key="idx">
       <el-tooltip
         v-if="item.type < 60"
         :content="ButtonTypeConfig[item.type].tip"
@@ -39,7 +39,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item
-              v-for="(menu, idx) in tableStore.tables.headers"
+              v-for="(menu, idx) in editorStore.tables.headers"
               :key="idx"
               @click="onMenu(menu)"
             >
@@ -50,7 +50,6 @@
       </el-dropdown>
     </div>
   </el-row>
-
   <table-create-row v-model="addVisible"></table-create-row>
 </template>
 <script lang="ts" setup>
@@ -61,9 +60,9 @@ import {
   HeaderType,
   SystemIcons,
 } from "../../home/utils/constants";
-import { tableStore } from "../useTable";
-import TableCreateRow from "./TableCreateRow.vue";
+import { editorStore } from "./editStore";
 import { isUrl, isBase64 } from "../../../utils/utils";
+import TableCreateRow from "../../form/components/TableCreateRow.vue";
 defineComponent({
   components: {
     TableCreateRow
@@ -72,7 +71,6 @@ defineComponent({
 const dropdown = ref();
 const addVisible = ref(false);
 const onClick = (item) => {
-  
   if (item.type >= 60) {
     dropdown.value[0].handleOpen();
   } else if (item.type === ButtonType.add) {
@@ -82,12 +80,11 @@ const onClick = (item) => {
 const onMenu = (item) => {
   item.disabled = !item.disabled;
 };
-
 </script>
 <style lang="scss">
-.form-buttons {
+.add-buttons {
   border-top: 1px solid #666;
-  padding: 6px 0;
+  padding: 6px 0 0;
   margin: 10px 0;
   .el-button {
     margin: 4px 6px;
@@ -102,6 +99,9 @@ const onMenu = (item) => {
   }
   .el-button + .el-button {
     margin-left: 12px;
+  }
+  .el-dropdown-menu__item {
+    padding: 0 10px;
   }
 }
 .el-popper.is-dark,
