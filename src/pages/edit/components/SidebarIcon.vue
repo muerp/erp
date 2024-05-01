@@ -45,4 +45,16 @@ const onClick = () => {
     border-right: 1px solid #999;
   }
 }
+.sidebar-right {
+  display: flex;
+  border: 1px solid #999;
+  transition: all 0.25s;
+  border-radius: 2px;
+  justify-content: flex-end;
+  &::before {
+    width: 6px;
+    height: 100%;
+    border-left: 1px solid #999;
+  }
+}
 </style>

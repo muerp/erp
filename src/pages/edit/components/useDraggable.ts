@@ -45,18 +45,24 @@ export const useDraggable = (emit: (key: string, e: any) => void): Ref<HTMLDivEl
                 emit('drag-move', {
                     offsetX: clientX,
                     offsetY: clientY,
+                    e: event
                 });
             }
         })
     }
     // 处理鼠标松开或触摸结束事件
-    const handleMouseUp = (_: MouseEvent | TouchEvent) => {
+    const handleMouseUp = (event: MouseEvent | TouchEvent) => {
+        if (isDragging) {
+            emit('drag-end', {
+                e: event
+            });
+        }
         // 停止拖拽，恢复点击事件
         stopDragging()
         // 移除鼠标移动事件和触摸移动事件的监听器
         document.removeEventListener('touchmove', handleMouseMove)
         document.removeEventListener('mousemove', handleMouseMove)
-        emit('drag-end', {});
+        
     }
 
     // 处理鼠标按下或触摸开始事件
@@ -76,10 +82,11 @@ export const useDraggable = (emit: (key: string, e: any) => void): Ref<HTMLDivEl
         // 添加鼠标松开和触摸结束事件监听器
         document.addEventListener('mouseup', handleMouseUp)
         document.addEventListener('touchend', handleMouseUp)
-
+        event.stopPropagation();
         emit('drag-start', {
             offsetX,
-            offsetY
+            offsetY,
+            e: event
         })
     }
     // 在组件挂载时，添加鼠标按下和触摸开始事件监听器

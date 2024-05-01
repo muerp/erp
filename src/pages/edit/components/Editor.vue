@@ -1,7 +1,7 @@
 <template>
   <div class="page w-full h-full">
     <el-row type="flex" class="w-full no-wrap overflow-hidden" style="height: 100%">
-      <mu-dragable init-width="200" style="border-right: 1px solid #999" :min-width="160">
+      <mu-dragable init-width="200" style="border-right: 1px solid #999" :min-width="160" v-show="showLeft">
         <el-row align="cneter" draggable="true" justify="center" class="mt-1 mb-1">
           <el-text size="large" align="center">我的菜单</el-text>
         </el-row>
@@ -30,7 +30,7 @@
           </mu-tree>
         </el-scrollbar>
       </mu-dragable>
-      <editor-content />
+      <editor-content @change-sidebar="onSidebar"/>
     </el-row>
   </div>
 </template>
@@ -41,6 +41,7 @@ import { LoadingState } from "../../home/utils";
 import MuTree from "./Tree.vue";
 import EditorContent from "./EditorContent.vue";
 const activeItem = ref();
+const showLeft = ref(true);
 defineComponent({
   components: {
     MuTree,
@@ -52,6 +53,9 @@ onMounted(() => {
 });
 const onMoveNode = (data) => {
   moveMenu(data);
+};
+const onSidebar = (show) => {
+  showLeft.value = show;
 };
 </script>
 

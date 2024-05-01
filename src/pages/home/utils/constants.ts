@@ -237,6 +237,7 @@ export const testSearch = [
         label: '状态',
         placeholder: '部门状态',
         key: 'state',
+        width: '30',
         menus: [
             { value: 2, label: '正常' },
             { value: 1, label: '停用' },

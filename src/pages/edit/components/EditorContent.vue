@@ -1,8 +1,8 @@
 <template>
-  <div class="flex-1 editor-inner d-column overflow-hidden">
-    <el-row class="editor-header align-center">
-      <el-row>
-        <sidebar-icon v-model="showLeft" class="mr-2 ml-1"/>
+  <div class="flex-1 editor-inner d-column overflow-hidden" :class="{'full-screen': isFullscreen}">
+    <el-row class="editor-header align-center" justify="space-between">
+      <el-row class="align-center">
+        <sidebar-icon v-model="showLeft" class="mr-2 ml-1" @update:model-value="handleSidebar"/>
         <el-checkbox
           v-for="(menu, idx) in moduleList"
           :key="idx"
@@ -10,6 +10,9 @@
           :label="menu.label"
           @change="onMenu(menu)"
         ></el-checkbox>
+      </el-row>
+      <el-row>
+         <sidebar-icon v-model="showRight" direction="right" class="mr-2 ml-1"/>
       </el-row>
     </el-row>
     <el-row class="no-wrap h-full flex-1 overflow-hidden">
@@ -25,7 +28,7 @@
           </el-row>
         </el-row>
       </el-row>
-      <property-dashboard></property-dashboard>
+      <property-dashboard v-show="showRight"></property-dashboard>
     </el-row>
   </div>
 </template>
@@ -48,8 +51,9 @@ defineComponent({
     SidebarIcon
   },
 });
-
+const emit = defineEmits(['change-sidebar'])
 const dropdown = ref();
+const isFullscreen = ref(true);
 const moduleList = ref([
   { label: "侧边栏" },
   { label: "搜索" },
@@ -57,13 +61,17 @@ const moduleList = ref([
   { label: "表单" },
 ]);
 const showLeft = ref(true);
+const showRight = ref(true);
 
 const onMenu = (menu) => {
-  console.log("----", menu.disabled);
   menu.disabled = !menu.disabled;
 };
+const handleSidebar = () => {
+    emit('change-sidebar', showLeft.value);
+}
 </script>
 <style lang="scss">
+
 .editor-inner {
   position: relative;
   .el-scrollbar__view {
@@ -90,5 +98,14 @@ const onMenu = (menu) => {
   top: 0;
   bottom: 0;
   right: 0;
+}
+.full-screen {
+    position: fixed;
+    background-color: #181818;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
 }
 </style>
