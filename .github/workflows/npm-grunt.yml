@@ -1,42 +1,28 @@
-name: Build Vue+Vite Project
- 
+name: NodeJS with Grunt
+
 on:
   push:
-    branches: [ main ]
- 
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
- 
+
+    strategy:
+      matrix:
+        node-version: ['18.x']
+
     steps:
-    - uses: actions/checkout@v2
- 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
       with:
-        node-version: 14
- 
-    - name: Cache Node.js modules
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: node_modules
-        key: ${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
- 
-    - name: Install dependencies
-      run: npm install
- 
-    - name: Build project
-      run: npm run build
- 
-    - name: Configure HTML
-      # 假设你有一个脚本来配置HTML，例如自动插入生成的JS和CSS文件
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build
       run: |
-        ./configure-html.sh
-    - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+        npm install
+        npm run build
