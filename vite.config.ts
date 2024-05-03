@@ -4,8 +4,7 @@ import path from 'path'
 import stringHash from 'string-hash'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'; 
 export default defineConfig({
-  base: '/erp',
-  publicDir: '/erp/',
+  base: './',
   plugins: [
     vue(),
     createSvgIconsPlugin({
