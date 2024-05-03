@@ -3,13 +3,6 @@
     <el-row class="editor-header align-center" justify="space-between">
       <el-row class="align-center">
         <sidebar-icon v-model="showLeft" class="mr-2 ml-1" @update:model-value="handleSidebar"/>
-        <el-checkbox
-          v-for="(menu, idx) in moduleList"
-          :key="idx"
-          :checked="!menu.disabled"
-          :label="menu.label"
-          @change="onMenu(menu)"
-        ></el-checkbox>
       </el-row>
       <el-row>
          <sidebar-icon v-model="showRight" direction="right" class="mr-2 ml-1"/>
@@ -18,27 +11,27 @@
     <el-row class="no-wrap h-full flex-1 overflow-hidden">
       <el-row class="no-wrap w-full h-full flex-1 overflow-hidden pos-relative">
         <el-row class="table-scroll overflow-auto w-full h-full">
-          <el-row>
-            <add-nav v-if="!moduleList[0].disabled"></add-nav>
+          <el-row class="w-full">
+            <add-nav v-if="elementInfo.tree"></add-nav>
             <div class="flex-1 overflow-hidden d-column pt-1 pl-1 pr-1">
-              <add-search v-if="!moduleList[1].disabled"></add-search>
-              <add-buttons v-if="!moduleList[2].disabled"></add-buttons>
-              <add-table v-if="!moduleList[3].disabled"></add-table>
+              <add-search v-if="elementInfo.search"></add-search>
+              <add-buttons v-if="elementInfo.button"></add-buttons>
+              <add-table v-if="elementInfo.table"></add-table>
             </div>
           </el-row>
         </el-row>
       </el-row>
-      <property-dashboard v-show="showRight"></property-dashboard>
+      <property-dashboard :style="{display: showRight? 'flex':'none'}"></property-dashboard>
     </el-row>
   </div>
 </template>
 <script lang="ts" , setup>
-import { defineComponent, ref } from "vue";
+import { defineComponent, provide, ref } from "vue";
 import AddButtons from "./AddButtons.vue";
 import AddSearch from "./AddSearch.vue";
 import AddTable from "./AddTable.vue";
 import AddNav from "./AddNav.vue";
-import PropertyDashboard from "./PropertyDashboard.vue";
+import PropertyDashboard from "./property/PropertyDashboard.vue";
 import SidebarIcon from './SidebarIcon.vue'
 
 defineComponent({
@@ -54,12 +47,13 @@ defineComponent({
 const emit = defineEmits(['change-sidebar'])
 const dropdown = ref();
 const isFullscreen = ref(true);
-const moduleList = ref([
-  { label: "侧边栏" },
-  { label: "搜索" },
-  { label: "按钮" },
-  { label: "表单" },
-]);
+const elementInfo = ref({
+  tree: false,
+  search: true,
+  button: true,
+  table: true,
+});
+provide('elementInfo', elementInfo);
 const showLeft = ref(true);
 const showRight = ref(true);
 

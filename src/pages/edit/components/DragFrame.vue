@@ -116,7 +116,7 @@ const dragRight = useDraggable((type, e) => {
     const pRect = dragFrame.value.parentNode.getBoundingClientRect();
     let width = e.offsetX - rect.left;
     width = width < 100 ? 100 : width;
-    emit("update:width", ((width / pRect.width) * 100).toFixed(2));
+    emit("update:width", ~~((width / pRect.width) * 100).toFixed(2));
   } else if (type === "drag-end") {
     if (dragWidth !== props.item.width) {
         emit("change-width");

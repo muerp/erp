@@ -27,6 +27,9 @@
                 {{ data.title || "菜单名称" }}
               </span>
             </template>
+            <template #drag-icon>
+              <svg-icon class="drag-icon" icon="drag"></svg-icon>
+            </template>
           </mu-tree>
         </el-scrollbar>
       </mu-dragable>
@@ -38,13 +41,11 @@
 import { defineComponent, onMounted, ref } from "vue";
 import { menuStore, getAllMenus, moveMenu } from "../../../store";
 import { LoadingState } from "../../home/utils";
-import MuTree from "./Tree.vue";
 import EditorContent from "./EditorContent.vue";
 const activeItem = ref();
 const showLeft = ref(true);
 defineComponent({
   components: {
-    MuTree,
     EditorContent,
   },
 });

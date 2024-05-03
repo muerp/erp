@@ -230,14 +230,15 @@ export const testSearch = [
         type: 1,
         label: '部门名称',
         placeholder: '请输入部门名称',
+        width: 30,
         key: 'name',
     },
     {
         type: 2,
         label: '状态',
-        placeholder: '部门状态',
+        placeholder: '请选择',
         key: 'state',
-        width: '30',
+        width: 30,
         menus: [
             { value: 2, label: '正常' },
             { value: 1, label: '停用' },
@@ -247,10 +248,12 @@ export const testSearch = [
         type: 3,
         label: '创建日期',
         key: 'create_time',
+        width: 30,
     },
     {
         type: 4,
         label: '日期范围',
+        width: 40,
         key: 'range',
     },
     {

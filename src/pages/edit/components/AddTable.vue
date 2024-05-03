@@ -85,7 +85,7 @@ const handleCurrentChange = () => {
   overflow: auto;
 }
 .el-table {
-  font-size: 12px;
+  font-size: var(--mu-font-szie);
 }
 .table-pagination {
   display: flex;

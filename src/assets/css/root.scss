@@ -27,10 +27,10 @@ body, html {
     --el-text-color-secondary: #ccc;
     --el-fill-color: #444;
 
-    --el-font-size-base: 12px;
+    --el-font-size-base: var(--mu-font-szie);
 
     --mu-theme-color: #409eff;
-    --mu-font-szie: 12px;
+    --mu-font-szie: 14px;
 
     --header-height: 64px;
     --tags-height: 38px;
@@ -39,13 +39,16 @@ body, html {
     --el-text-color-regular: #fff;
 }
 .el-checkbox {
-    --el-checkbox-font-size: 12px;
+    --el-checkbox-font-size: var(--mu-font-szie);
 }
 .el-row.is-align-center {
     align-items: center;
 }
 .align-center {
     align-items: center;
+}
+.align-top {
+    align-items: flex-start;
 }
 .d-column {
     display: flex;
@@ -58,40 +61,10 @@ body, html {
     min-height: 100%;
 }
 
-.mt-1 {
-    margin-top: 0.5rem;
-}
-.mt-2 {
-    margin-top: 1rem;
-}
-.mr-1 {
-    margin-right: 0.5rem;
-}
-.mr-2 {
-    margin-right: 1rem;
-}
-
-.pt-1 {
-    padding-top: 12px;
-}
-.pl-1 {
-    padding-left: 12px;
-}
-.pr-1 {
-    padding-right: 12px;
-}
 .flex-1 {
     flex: 1;
 }
-.overflow-hidden {
-    overflow: hidden;
-}
-.overflow-auto {
-    overflow: auto;
-}
-.pos-relative {
-    position: relative;
-}
+
 .page {
     padding: 1rem;
     min-height: 100%;
@@ -105,10 +78,17 @@ body, html {
 .el-notification {
     --el-notification-content-color: var(--el-collapse-header-text-color);
 }
-.no-wrap {
-    flex-wrap: nowrap;
-}
 
 .el-loading-spinner .el-loading-text {
-    font-size: 12px;
+    font-size: var(--mu-font-szie);
+}
+.base-font-size {
+    font-size: var(--mu-font-szie);
+}
+
+.el-checkbox {
+    --el-checkbox-checked-text-color: #c2c2c2;
+    --el-checkbox-checked-bg-color: #181818;
+    --el-checkbox-checked-input-border-color: #ffffff;
+    --el-checkbox-checked-icon-color: #ffffff;
 }

@@ -79,7 +79,7 @@ defineComponent({
 .table-opas {
   .el-button {
     height: 24px;
-    font-size: 12px;
+    font-size: var(--mu-font-szie);
     margin: 0 3px;
   }
 }

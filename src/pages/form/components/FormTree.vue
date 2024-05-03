@@ -42,10 +42,10 @@ const handleNodeClick = (data) => {
 }
 .el-input__wrapper {
     height: 28px;
-    font-size: 12px;
+    font-size: var(--mu-font-szie);
 }
 .el-tree__empty-text {
-    font-size: 12px;
+    font-size: var(--mu-font-szie);
 }
 .el-tree {
     margin-top: 16px;

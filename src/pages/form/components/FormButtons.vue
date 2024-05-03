@@ -92,7 +92,7 @@ const onMenu = (item) => {
   .el-button {
     margin: 4px 6px;
     height: 28px;
-    font-size: 12px;
+    font-size: var(--mu-font-szie);
     .svg-icon {
       height: 14px;
     }

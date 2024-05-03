@@ -93,20 +93,20 @@ const onReset = () => {
   align-items: center;
   .el-input__inner {
     color: #fff;
-    font-size: 12px;
+    font-size: var(--mu-font-szie);
     height: 26px;
   }
 }
 .el-form-item__label {
   height: 28px;
-  font-size: 12px;
+  font-size: var(--mu-font-szie);
 }
 .el-form-item__content {
   line-height: 28px;
 }
 .el-select__wrapper {
   min-height: 28px;
-  font-size: 12px;
+  font-size: var(--mu-font-szie);
 }
 .form-search {
   .el-select {
@@ -120,7 +120,7 @@ const onReset = () => {
 }
 .search-btn {
   height: 28px;
-  font-size: 12px;
+  font-size: var(--mu-font-szie);
   color: #eee;
   .svg-icon {
     width: 15px;
@@ -129,6 +129,6 @@ const onReset = () => {
 }
 .el-date-editor .el-range-input,
 .el-date-editor .el-range-separator {
-  font-size: 12px;
+  font-size: var(--mu-font-szie);
 }
 </style>
