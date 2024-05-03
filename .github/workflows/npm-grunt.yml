@@ -17,4 +17,5 @@ jobs:
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # The folder the action should deploy.
+          folder: dist                         # 部署的目录
+          branch: gh-pages                     # 部署到哪个分支
