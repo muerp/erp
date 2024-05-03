@@ -1,12 +1,11 @@
 import { testButtons, testSearch, testTables, testTree } from '@/pages/home/utils'
 import { reactive } from 'vue'
 
-export const editorStore = reactive<{
+export const editorStore: any = reactive<{
     searchs?: any[]
     trees?: any[]
     buttons?: any[]
-    tables?: { headers: any }
-    //
+    tables?: { headers: any[] }
     curEditorItem?: any
 }>({
     searchs: testSearch,

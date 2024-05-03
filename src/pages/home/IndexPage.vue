@@ -38,7 +38,7 @@
               :key="idx"
             >
               <ul>
-                <li v-for="(describe, tdx) in version.describes">
+                <li v-for="describe in version.describes">
                   {{ describe }}
                 </li>
               </ul>
@@ -64,9 +64,9 @@
               v-for="(qq, idx) in qqs"
               :key="idx"
               :tag="qq.isFull ? 'Del' : 'span'"
-              :class="qq.isFull? '':'qq-no-full'"
-              :type="qq.isFull? '':'high-color'"
-              v-clipboard:copy="qq.isFull? '':qq.zz"
+              :class="qq.isFull ? '' : 'qq-no-full'"
+              :type="qq.isFull ? '' : 'info'"
+              v-clipboard:copy="qq.isFull ? '' : qq.zz"
             >
               {{ qq.zz }}
             </el-text>
@@ -135,13 +135,13 @@ const qqs = ref([
   }
 }
 .qq-text {
-    margin: 0 4px;
+  margin: 0 4px;
 }
 .qq-no-full {
-    cursor: pointer;
-    transition: color .25s;
-    &:hover {
-        color: var(--mu-theme-color);
-    }
+  cursor: pointer;
+  transition: color 0.25s;
+  &:hover {
+    color: var(--mu-theme-color);
+  }
 }
 </style>

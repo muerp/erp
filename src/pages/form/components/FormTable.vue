@@ -47,8 +47,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
-import { ButtonType, LoadingState } from "../../home/utils/constants";
+import { computed, defineComponent, onMounted, watch } from "vue";
+import { LoadingState } from "../../home/utils/constants";
 import TableItem from "./TableItem.vue";
 import { tableStore, tableDataStore, fetchTableData } from "../useTable";
 defineComponent({
@@ -56,9 +56,8 @@ defineComponent({
     TableItem,
   },
 });
-const loading = ref(true);
 const headers = computed(() => {
-  return tableStore.tables.headers.filter((r) => !r.disabled);
+  return tableStore.tables.headers.filter((r: any) => !r.disabled);
 });
 watch(
   () => tableStore.tables,

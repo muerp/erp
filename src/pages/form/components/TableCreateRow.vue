@@ -14,7 +14,7 @@
       element-loading-background="rgba(0, 0, 0, 0)"
     >
       <el-form-item
-        v-for="(header, idx) in tableStore.tables.headers"
+        v-for="(header) in tableStore.tables.headers"
         v-show="header.type !== HeaderType.opa"
         :key="header.key"
         :label="header.label"
@@ -95,7 +95,7 @@
                   >
                     <div
                       class="table-img"
-                      :class="{ active: form[header.key]?.icon === icon }"
+                      :class="{ active: form[header.key]?.icon === img }"
                       v-for="(img, idx) in imageStore.images"
                       :key="idx"
                       @click="onSelectImage(img, header.key)"
@@ -151,8 +151,6 @@ import TableIcon from "./TableIcon.vue";
 import { isUrl, isBase64 } from "../../../utils/utils";
 import { fetchImages, imageStore } from "../../../store";
 import {
-  ButtonType,
-  ButtonTypeConfig,
   HeaderType,
   SystemIcons,
   LoadingState,
@@ -188,7 +186,7 @@ const predefineColors = ref([
   "#c7158577",
 ]);
 const iconDropRef = ref();
-const form = ref({});
+const form = ref<any>({});
 const isSubmitting = ref(false);
 const showDialog = ref(false);
 watch(
@@ -230,20 +228,20 @@ const onSelectImage = (icon: string, key: string) => {
   iconDropRef.value[0]?.handleClose();
 };
 
-const onChangeIconColor = (color, key) => {
+const onChangeIconColor = (color: any, key: string) => {
   if (!form.value[key]) {
     form.value[key] = {};
   }
   form.value[key].color = color;
 };
-const onTabChange = (name: string) => {
+const onTabChange = (name: any) => {
   if (name === "my") {
     fetchImages();
   }
 };
 const onCreate = () => {
-  const data = {};
-  tableStore.tables.headers.forEach((item) => {
+  const data: any = {};
+  tableStore.tables.headers.forEach((item: any) => {
     if (form.value[item.key]) {
       const value = form.value[item.key];
       data[item.key] = item.type === HeaderType.time ? new Date(value).getTime() : value;

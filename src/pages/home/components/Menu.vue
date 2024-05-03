@@ -29,15 +29,15 @@
   </el-menu-item>
 </template>
 <script lang="ts" setup>
-import { defineComponent, defineOptions, computed, ref, onMounted } from "vue";
+import { defineOptions } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { store } from "../../../store/useNavStore";
 defineOptions({
   name: "MuMenu",
 });
 const props = defineProps({
-  menu: { type: Object, require: true },
-  index: { type: String, require: true },
+  menu: { type: Object, require: true, default: {} },
+  index: { type: String, require: true, default: 0 },
   isActive: { type: Boolean, default: false },
 });
 const route = useRoute();
@@ -46,9 +46,9 @@ const router = useRouter();
 const onNav = () => {
   const idx = store.tabs.findIndex((r) => r.path === props.menu.path);
   if (idx === -1) {
-    store.tabs.push(props.menu);
+    store.tabs.push(props.menu as any);
   }
-  store.setCurNav(props.menu);
+  store.setCurNav(props.menu as any);
   router.push({
     path: props.menu.path,
   });

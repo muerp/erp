@@ -57,20 +57,22 @@
   </el-row>
 </template>
 <script lang="ts" setup>
-import { defineProps, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { SeartFrameType } from "../../home/utils/constants";
 import {fetchTableData, tableStore} from '../useTable';
 
-const form = ref([]);
+const form = ref<any[]>([]);
 
 watch(() => tableStore.searchs, ()=>{
-  form.value = tableStore.searchs.map((item) => "");
+  if (tableStore.searchs) {
+    form.value = tableStore.searchs.map(() => "");
+  }
 })
 
 const onSubmit = () => {
-  const params = {};
+  const params: any = {};
   form.value.forEach((v, idx) => {
-    if (v) {
+    if (v && tableStore.searchs) {
       const item = tableStore.searchs[idx];
       if (item.type === SeartFrameType.date) {
         params[item.key] = new Date(v).getTime();

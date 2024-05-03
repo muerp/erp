@@ -3,7 +3,13 @@
 import { reactive } from 'vue'
 import { LoadingState } from '../home/utils';
 
-export const tableStore = reactive({
+export const tableStore = reactive<{
+    isLoading: boolean,
+    trees?: any[],
+    searchs?: any[],
+    buttons?: any[],
+    tables?: any
+}>({
     isLoading: true,
     // 查
     trees: undefined,

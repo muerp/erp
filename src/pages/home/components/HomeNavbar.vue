@@ -10,7 +10,7 @@
     :min-width="200"
     :drag-enabled="!isCollapse"
   >
-    <el-row class="home-h" align="center" justify="center">
+    <el-row class="home-h" align="middle" justify="center">
       <transition name="logo" mode="out-in">
         <div class="d-center home-p" v-if="!isCollapse">
           <img class="logo" src="../../../assets/img/logo.png" alt="logo" />
@@ -40,12 +40,11 @@
   </mu-dragable>
 </template>
 <script lang="ts" setup>
-import { defineComponent, nextTick, onMounted, watch } from "vue";
+import { defineComponent, onMounted, watch } from "vue";
 import { ref } from "vue";
 import MuMenu from "./Menu.vue";
-import { defaultMenus, LoadingState, testMenus } from "../utils/constants";
-import { store, formateMenus, fetchNavsList } from "../../../store/useNavStore";
-import { useRoute } from "vue-router";
+import { LoadingState } from "../utils/constants";
+import { store, fetchNavsList } from "../../../store/useNavStore";
 const props = defineProps({
   isCollapse: { type: Boolean, default: false },
 });
@@ -58,13 +57,12 @@ defineComponent({
 });
 const dragable = ref();
 const menuRef = ref();
-const expands = ref(["1"]);
-const route = useRoute();
+const expands = ref<any[]>(["1"]);
 onMounted(() => {
   setTimeout(() => {
-    fetchNavsList().then((ids) => {
+    fetchNavsList().then((ids: any) => {
       expands.value = ids;
-      ids.forEach((id) => {
+      ids.forEach((id: any) => {
         menuRef.value.open(id);
       });
     });

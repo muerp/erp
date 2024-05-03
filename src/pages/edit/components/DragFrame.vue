@@ -23,14 +23,14 @@
 import { inject, onUnmounted, ref, watch } from "vue";
 import { useDraggable } from "./useDraggable";
 
-const props = defineProps({
+const props: any = defineProps({
   width: { type: String, default: "" },
-  index: { type: Number, default: 0 },
+  index: { type: [Number, String], default: 0 },
   item: { type: Object, require: true },
   activeItem: { type: Object, default: undefined },
   checkFrame: { type: Boolean, default: false },
 });
-const fromList = inject("fromList");
+const fromList: any = inject("fromList");
 const emit = defineEmits([
   "update:width",
   "update:activeItem",
@@ -52,7 +52,7 @@ watch(
     }
   }
 );
-const dragFrame = useDraggable((type, e) => {
+const dragFrame: any = useDraggable((type, e) => {
   if (type === "drag-start") {
     dragPos.value = undefined;
   } else if (type === "drag-end") {
@@ -98,7 +98,7 @@ const dragFrame = useDraggable((type, e) => {
   }
 });
 
-const onRef = (el) => {
+const onRef = (el: any) => {
   if (!props.checkFrame) return;
   dragFrame.value = el;
   fromList.value[props.index] = {

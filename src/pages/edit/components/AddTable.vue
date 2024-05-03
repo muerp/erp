@@ -46,7 +46,6 @@
 </template>
 <script lang="ts" setup>
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
-import { ButtonType, LoadingState } from "../../home/utils/constants";
 import TableItem from "../../form/components/TableItem.vue";
 import { editorStore } from "./editStore";
 defineComponent({
@@ -54,9 +53,8 @@ defineComponent({
     TableItem,
   },
 });
-const loading = ref(true);
 const headers = computed(() => {
-  return editorStore.tables.headers.filter((r) => !r.disabled);
+  return editorStore.tables.headers.filter((r: any) => !r.disabled);
 });
 const tempData = ref([])
 const curPage = ref(1);

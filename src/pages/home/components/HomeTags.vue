@@ -19,12 +19,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { store } from "../../../store/useNavStore";
 const route = useRoute();
 const router = useRouter();
-const onDelete = (e, data) => {
+const onDelete = (e: any, data: any) => {
   e.stopPropagation();
   const idx = store.tabs.findIndex((r) => r.path === data.path);
   if (idx !== -1) {
@@ -37,7 +36,7 @@ const onDelete = (e, data) => {
     }
   }
 };
-const onClick = (e, data) => {
+const onClick = (e: any, data: any) => {
   e.preventDefault();
   store.setCurNav(data);
   router.push({

@@ -323,7 +323,7 @@ export enum ButtonType {
     refresh = 81,
     colkey = 82,
 }
-export const ButtonTypeConfig = {
+export const ButtonTypeConfig: {[key: string]: any } = {
     1: { icon: 'add', label: '增加', type: 'primary' },
     2: { icon: 'modify', label: '修改', type: 'success' },
     3: { icon: 'trash', label: '删除', type: 'danger' },

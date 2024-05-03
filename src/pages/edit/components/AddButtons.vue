@@ -53,15 +53,12 @@
   <table-create-row v-model="addVisible"></table-create-row>
 </template>
 <script lang="ts" setup>
-import { computed, defineComponent, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import {
   ButtonType,
   ButtonTypeConfig,
-  HeaderType,
-  SystemIcons,
 } from "../../home/utils/constants";
 import { editorStore } from "./editStore";
-import { isUrl, isBase64 } from "../../../utils/utils";
 import TableCreateRow from "../../form/components/TableCreateRow.vue";
 defineComponent({
   components: {
@@ -70,14 +67,14 @@ defineComponent({
 });
 const dropdown = ref();
 const addVisible = ref(false);
-const onClick = (item) => {
+const onClick = (item: any) => {
   if (item.type >= 60) {
     dropdown.value[0].handleOpen();
   } else if (item.type === ButtonType.add) {
     addVisible.value = true;
   }
 };
-const onMenu = (item) => {
+const onMenu = (item: any) => {
   item.disabled = !item.disabled;
 };
 </script>

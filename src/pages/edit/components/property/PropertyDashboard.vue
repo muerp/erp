@@ -47,7 +47,7 @@ defineComponent({
   },
 });
 const curTab = ref(1);
-const onChangeTab = (tab) => {
+const onChangeTab = (tab: any) => {
   curTab.value = tab;
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="page w-full h-full">
     <el-row type="flex" class="w-full no-wrap overflow-hidden" style="height: 100%">
       <mu-dragable init-width="200" style="border-right: 1px solid #999" :min-width="160" v-show="showLeft">
-        <el-row align="cneter" draggable="true" justify="center" class="mt-1 mb-1">
+        <el-row align="middle" draggable="true" justify="center" class="mt-1 mb-1">
           <el-text size="large" align="center">我的菜单</el-text>
         </el-row>
         <el-scrollbar>
@@ -52,10 +52,10 @@ defineComponent({
 onMounted(() => {
   getAllMenus();
 });
-const onMoveNode = (data) => {
+const onMoveNode = (data: any) => {
   moveMenu(data);
 };
-const onSidebar = (show) => {
+const onSidebar = (show: any) => {
   showLeft.value = show;
 };
 </script>

@@ -45,7 +45,6 @@ defineComponent({
   },
 });
 const emit = defineEmits(['change-sidebar'])
-const dropdown = ref();
 const isFullscreen = ref(true);
 const elementInfo = ref({
   tree: false,
@@ -57,9 +56,6 @@ provide('elementInfo', elementInfo);
 const showLeft = ref(true);
 const showRight = ref(true);
 
-const onMenu = (menu) => {
-  menu.disabled = !menu.disabled;
-};
 const handleSidebar = () => {
     emit('change-sidebar', showLeft.value);
 }

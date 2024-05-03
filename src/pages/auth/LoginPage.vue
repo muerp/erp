@@ -1,16 +1,16 @@
 <template>
   <div class="w-full h-full d-center">
-    <el-row type="flex" align="center" justify="center" style="width: 600px">
+    <el-row type="flex" align="middle" justify="center" style="width: 600px">
       <el-col :span="12">
         <el-row class="mb-2">
           <el-text size="large" truncated>MU ERP 管理系统 </el-text>
         </el-row>
-        <el-row align="center">
+        <el-row align="middle">
           <Check width="16px" class="mr-1" height="16px" /><el-text size="small"
             >他强任你强，清风拂山岗
           </el-text>
         </el-row>
-        <el-row align="center">
+        <el-row align="middle">
           <Check width="16px" class="mr-1" height="16px" /><el-text size="small"
             >他自狠来他自恶，我自一口真气足
           </el-text>
@@ -25,7 +25,7 @@
         element-loading-svg-view-box="-10, -10, 50, 50"
         element-loading-background="rgba(122, 122, 122, 0.8)"
       >
-        <el-row class="mb-2" align="center" justify="center">
+        <el-row class="mb-2" align="middle" justify="center">
           <el-text class="large-mx"> 登陆 </el-text>
         </el-row>
         <el-row class="mb-2">
@@ -76,7 +76,7 @@
             }}</el-text>
           </el-form-item>
           <el-form-item>
-            <el-row align="center" justify="space-between">
+            <el-row align="middle" justify="space-between">
               <el-col :span="12">
                 <el-input
                   v-model="form.code"
@@ -112,7 +112,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { ElMessage, ElNotification } from "element-plus";
+import { ElNotification } from "element-plus";
 import { randomNumber, StorageKey } from "../../utils";
 import { useRouter } from "vue-router";
 import Storage from "../../utils/storage";

@@ -25,9 +25,10 @@ defineComponent({
   },
 });
 const isCollapse = ref(false);
-const breadcrumbs = ref([]);
+const breadcrumbs = ref<any[]>([]);
 
 watch(()=>store.curNav, ()=> {
+  if (!store.curNav) return;
   window.document.title = store.curNav.title;
   const c = [];
   if (store.curNav.path !== '/') {

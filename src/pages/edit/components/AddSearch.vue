@@ -69,8 +69,7 @@
   </el-row>
 </template>
 <script lang="ts" setup>
-import { defineComponent, defineProps, provide, ref, watch } from "vue";
-import { SeartFrameType } from "../../home/utils/constants";
+import { defineComponent, provide, ref, watch } from "vue";
 import { editorStore, updateSearchProperty, updateSearchSort } from "./editStore";
 import DragFrame from "./DragFrame.vue";
 defineComponent({
@@ -85,10 +84,10 @@ const targetItem = ref();
 watch(
   () => editorStore.searchs,
   () => {
-    form.value = editorStore.searchs.map((item) => "");
+    form.value = editorStore.searchs.map(() => "");
   }
 );
-const onSelect = (e, item) => {
+const onSelect = (_: any, item: any) => {
   if (item.type >= 99) return;
   if (editorStore.curEditorItem) {
     editorStore.curEditorItem.data.active = false;
@@ -96,12 +95,12 @@ const onSelect = (e, item) => {
   editorStore.curEditorItem = { data: item, type: "search" };
   editorStore.curEditorItem.data.active = true;
 };
-const onDragEnd = (e) => {
+const onDragEnd = (e: any) => {
   if (e && targetItem.value) {
     updateSearchSort(e, targetItem.value);
   }
 }
-const onUpdateWidth = (item) => {
+const onUpdateWidth = (item: any) => {
   updateSearchProperty(item);
 }
 const onReset = () => {

@@ -20,7 +20,7 @@ const defaultProps = {
 const defaultExpandedKeys = ref([]);
 onMounted(()=>{
   if (editorStore.trees) {
-    defaultExpandedKeys.value = editorStore.trees.map(item => item.id);
+    defaultExpandedKeys.value = editorStore.trees.map((item: any) => item.id);
   }
 })
 const handleNodeClick = () => {

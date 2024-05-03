@@ -24,13 +24,13 @@ const defaultProps = {
   label: 'label',
 }
 const searchValue = ref('');
-const defaultExpandedKeys = ref([]);
+const defaultExpandedKeys = ref<any[]>([]);
 onMounted(()=>{
   if (tableStore.trees) {
     defaultExpandedKeys.value = tableStore.trees.map(item => item.id);
   }
 })
-const handleNodeClick = (data) => {
+const handleNodeClick = () => {
     fetchTableData();
 }
 </script>

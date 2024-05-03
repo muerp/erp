@@ -69,25 +69,26 @@ import { ref, watch } from "vue";
 import { SeartFrameType } from "../../../home/utils";
 import { editorStore } from "../editStore";
 
+const form = ref<any>({})
 watch(
   () => editorStore.curEditorItem,
   () => {
     console.log("-curEditorItem---", editorStore.curEditorItem);
   }
 );
-const onMove = ({ sourceIndex, targetIndex, item, position }, list) => {
+const onMove = ({ sourceIndex, targetIndex, item, position }: any, list: any[]) => {
   list.splice(sourceIndex, 1);
   let idx = targetIndex + (position === "top" ? 0 : 1);
   idx = targetIndex <= sourceIndex ? idx - 1 : idx;
   list.splice(idx, 0, item);
 };
-const onAdd = (list) => {
+const onAdd = (list: any[]) => {
   list.push({
     label: "",
     value: "",
   });
 };
-const onDelete = (list, index) => {
+const onDelete = (list: any[], index: number) => {
   list.splice(index, 1);
 };
 </script>

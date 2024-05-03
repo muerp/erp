@@ -1,6 +1,6 @@
 <template>
-  <el-row class="home-header" justify="space-between" align="center">
-    <el-row align="center">
+  <el-row class="home-header" justify="space-between" align="middle">
+    <el-row align="middle">
       <el-button link class="ml-1 expand-btn mr-1" @click="onExpand">
         <svg-icon :icon="open ? 'collapsed' : 'collapse'"></svg-icon>
       </el-button>
@@ -17,7 +17,7 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
-    <el-row align="center">
+    <el-row align="middle">
       <el-button link class="mr-1">
         <svg-icon icon="search" size="24"></svg-icon>
       </el-button>
@@ -37,7 +37,7 @@
   </el-row>
 </template>
 <script lang="ts" setup>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { store } from "../../../store/useNavStore";
 defineOptions({
@@ -45,12 +45,11 @@ defineOptions({
 });
 const props = defineProps({
   isCollapse: { type: Boolean, default: false },
-  breadcrumbs: { type: Array, default: [] },
+  breadcrumbs: { type: Array<any>, default: [] },
 });
 const emit = defineEmits(["update:isCollapse"]);
 const open = ref(false);
 const themeSwitch = ref(false);
-const theme = ref("dark");
 const router = useRouter();
 onMounted(() => {
   open.value = props.isCollapse;
@@ -64,7 +63,7 @@ watch(
 const onExpand = () => {
   open.value = !open.value;
 };
-const onNav = (menu) => {
+const onNav = (menu: any) => {
   if (!menu.path) return;
   store.setCurNav(menu);
   router.push({

@@ -30,14 +30,6 @@ defineComponent({
     FormTree,
   },
 });
-const trees = ref();
-// 查
-const searchs = ref([]);
-// 增、删、改
-const buttons = ref([]);
-
-const headers = ref([]);
-const tables = ref();
 const loading = ref(true);
 onMounted(() => {
     setTimeout(() => {

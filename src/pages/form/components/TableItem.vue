@@ -52,9 +52,9 @@ import { HeaderType, ButtonTypeConfig } from "../../home/utils/constants";
 import TableIcon from "./TableIcon.vue";
 import moment from "moment";
 defineProps({
-  data: { type: Object, require: true },
-  header: { type: Object, require: true },
-  config: { type: Object, require: true },
+  data: { type: Object, require: true, default: {} },
+  header: { type: Object, require: true, default: {} },
+  config: { type: Object, require: true, default: {} },
 });
 defineComponent({
   components: {

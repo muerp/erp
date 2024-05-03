@@ -93,10 +93,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { inject, ref } from "vue";
+import { inject } from "vue";
 
-const elementInfo = inject('elementInfo');
-const onSelect = (key) => {
+const elementInfo = inject<any>('elementInfo');
+const onSelect = (key: string) => {
   elementInfo.value[key] = !elementInfo.value[key];
 };
 </script>
