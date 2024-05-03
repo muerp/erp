@@ -25,3 +25,5 @@ jobs:
     - name: Build
       run: |
         npm install
+      with:
+        folder: dist
