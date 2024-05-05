@@ -92,3 +92,10 @@ body, html {
     --el-checkbox-checked-input-border-color: #ffffff;
     --el-checkbox-checked-icon-color: #ffffff;
 }
+.hidden {
+    visibility: hidden;
+    pointer-events: none;
+}
+.align-top {
+    align-items: flex-start;
+}

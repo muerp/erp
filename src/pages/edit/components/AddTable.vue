@@ -1,10 +1,6 @@
 <template>
-  <div class="add-table flex-1 mt-2">
-    <el-table
-      :data="tempData"
-      style="width: 100%"
-      border
-    >
+  <div class="add-table flex-1 mt-2" @click="onTap" :class="{active: editorStore.curEditorItem&&editorStore.curEditorItem.type==='table'}">
+    <el-table :data="editorStore.rows" style="width: 100%" border>
       <el-table-column
         v-if="editorStore.tables.select"
         type="selection"
@@ -28,10 +24,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div
-      class="table-pagination"
-      v-if="tempData.length > 0"
-    >
+    <div class="table-pagination" v-if="editorStore.rows.length > 0">
       <el-pagination
         v-model:current-page="curPage"
         v-model:page-size="pageSize"
@@ -56,12 +49,19 @@ defineComponent({
 const headers = computed(() => {
   return editorStore.tables.headers.filter((r: any) => !r.disabled);
 });
-const tempData = ref([])
+
+const onTap = () => {
+  if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
+    editorStore.curEditorItem.data.active = false;
+  }
+  editorStore.curEditorItem = {
+    type: "table",
+  };
+}
+
 const curPage = ref(1);
 const pageSize = ref(20);
-const fetchTableData = () => {
-    
-}
+const fetchTableData = () => {};
 watch(
   () => editorStore.tables,
   () => {
@@ -81,6 +81,10 @@ const handleCurrentChange = () => {
 <style lang="scss">
 .add-table {
   overflow: auto;
+  border: 1px solid transparent;
+  &.active {
+    border: 1px solid #27ae4b;
+  }
 }
 .el-table {
   font-size: var(--mu-font-szie);

@@ -1,5 +1,12 @@
 <template>
-  <el-row class="add-buttons">
+  <el-row
+    class="add-buttons"
+    :class="{
+      active: editorStore.curEditorItem && editorStore.curEditorItem.type === 'button',
+    }"
+    v-if="editorStore.buttons"
+    @click="onTap"
+  >
     <div v-for="(item, idx) in editorStore.buttons" :key="idx">
       <el-tooltip
         v-if="item.type < 60"
@@ -54,19 +61,24 @@
 </template>
 <script lang="ts" setup>
 import { defineComponent, ref } from "vue";
-import {
-  ButtonType,
-  ButtonTypeConfig,
-} from "../../home/utils/constants";
+import { ButtonType, ButtonTypeConfig } from "../../home/utils/constants";
 import { editorStore } from "./editStore";
 import TableCreateRow from "../../form/components/TableCreateRow.vue";
 defineComponent({
   components: {
-    TableCreateRow
+    TableCreateRow,
   },
 });
 const dropdown = ref();
 const addVisible = ref(false);
+const onTap = () => {
+  if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
+    editorStore.curEditorItem.data.active = false;
+  }
+  editorStore.curEditorItem = {
+    type: "button",
+  };
+};
 const onClick = (item: any) => {
   if (item.type >= 60) {
     dropdown.value[0].handleOpen();
@@ -80,9 +92,14 @@ const onMenu = (item: any) => {
 </script>
 <style lang="scss">
 .add-buttons {
-  border-top: 1px solid #666;
-  padding: 6px 0 0;
+  border: 1px solid transparent;
+  border-top-color: #666;
+  padding: 6px 0 6px;
   margin: 10px 0;
+  cursor: pointer;
+  &.active {
+    border-color: #27ae4b;
+  }
   .el-button {
     margin: 4px 6px;
     height: 28px;

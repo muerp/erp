@@ -1,17 +1,48 @@
 import { testButtons, testSearch, testTables, testTree } from '@/pages/home/utils'
 import { reactive } from 'vue'
 
+
+export const formatHeaders = (items: any[]) => {
+    return items.map(item => {
+        const n = {...item};
+        n.children = [{type: 1000, parent: n}];
+        if (n.type === 6) {
+            for (const state in n.map) {
+                n.map[state].state = state;
+            }
+        }
+        return n;
+    })
+}
+const tempHeaders = {...testTables};
+tempHeaders.headers = formatHeaders(tempHeaders.headers);
 export const editorStore: any = reactive<{
     searchs?: any[]
     trees?: any[]
     buttons?: any[]
-    tables?: { headers: any[] }
+    tables?: { headers: any[], [key:string]: any }
     curEditorItem?: any
+    rows?: any[]
 }>({
     searchs: testSearch,
     trees: testTree,
     buttons: testButtons,
-    tables: testTables,
+    tables: tempHeaders,
+    rows: [
+        {
+            key1: 1,
+            key2: "显示文本",
+            key3: false,
+            key4: Date.now(),
+            key5: {
+                icon: "tab",
+                color: 'red'
+            },
+            key6: 1,
+            key7: "",
+            key100: "",
+        }
+    ]
 })
 
 export const updateSearchSort = (source: { item: any; index: any }, target: any) => {

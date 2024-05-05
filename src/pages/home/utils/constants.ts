@@ -404,7 +404,7 @@ export const testTables = {
             "type": 3,
             label: '开关',
             url: '',
-            "key": "key3"
+            "key": "key3",
         },
         {
             "type": 4,
@@ -423,29 +423,35 @@ export const testTables = {
             "type": 6,
             label: '状态',
             "key": "key6",
+            width: 120,
             require: true,
             map: {
                 1: {
                     label: '成功',
-                    type: 'primary'
+                    type: 'red',
+                    state: 1,
                 },
                 2: {
                     label: '失败',
-                    type: 'danger'
+                    type: 'green',
+                    state: 2,
                 },
                 3: {
                     label: '信息',
-                    type: 'info'
+                    type: 'yellow',
+                    state: 3,
                 },
                 4: {
                     label: '警告',
-                    type: 'warning'
+                    type: 'blue',
+                    state: 4,
                 },
                 5: {
                     label: '成功',
-                    type: 'success'
+                    type: 'cyan',
+                    state: 5,
                 }
-            }
+            },
         },
         {
             "type": 100,
@@ -469,7 +475,7 @@ export const testTables = {
                     "type": 5
                 }
             ],
-            "key": "key100"
+            "key": "key100",
         }
     ]
 }
@@ -486,3 +492,36 @@ export const SystemIcons = [
     'tab',    'trash',    'tree',
     'tree1',  'user',     'yh'
 ]
+
+
+
+export const StateColors = {
+    red: {
+      value: '#E63415',
+      label: 'red',
+    },
+    orange: {
+      value: '#FF6600',
+      label: 'orange',
+    },
+    yellow: {
+      value: '#FFDE0A',
+      label: 'yellow',
+    },
+    green: {
+      value: '#1EC79D',
+      label: 'green',
+    },
+    cyan: {
+      value: '#14CCCC',
+      label: 'cyan',
+    },
+    blue: {
+      value: '#4167F0',
+      label: 'blue',
+    },
+    purple: {
+      value: '#6222C9',
+      label: 'purple',
+    },
+}

@@ -10,7 +10,7 @@ import './assets/css/root.scss'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import 'virtual:svg-icons-register';
-import SvgIcon from './components/SvgIcon.vue'
+import * as comps from './components'
 
 import registerDirective from './directive'
 
@@ -19,7 +19,9 @@ registerDirective(app);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-app.component('SvgIcon', SvgIcon);
+for (const [key, component] of Object.entries(comps)) {
+  app.component(key, component)
+}
 app.use(ElementPlus);
 app.use(ErpUI);
 app.mount('#app')

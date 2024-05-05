@@ -26,13 +26,17 @@
   </span>
   <table-icon v-else-if="header.type === HeaderType.icon" :src="data[header.key].icon" :color="data[header.key].color">
   </table-icon>
-  <el-tag
-    v-else-if="header.type === HeaderType.state"
-    :type="header.map[data[header.key]].type"
+  <div
+    v-else-if="header.type === HeaderType.state && header.map[data[header.key]]"
+    class="state-tag"
+    :style="{
+      'color':StateColors[header.map[data[header.key]].type].value,
+      'background-color': StateColors[header.map[data[header.key]].type].value+'30'
+    }"
     :disable-transitions="true"
   >
     {{ header.map[data[header.key]].label }}
-  </el-tag>
+  </div>
   <div class="table-opas w-full" v-else-if="header.type === HeaderType.opa">
     <el-button
       :class="{ 'opa-text': config.buttonType === 'text' }"
@@ -48,7 +52,7 @@
 </template>
 <script lang="ts" setup>
 import { defineComponent } from "vue";
-import { HeaderType, ButtonTypeConfig } from "../../home/utils/constants";
+import { HeaderType, ButtonTypeConfig, StateColors } from "../../home/utils/constants";
 import TableIcon from "./TableIcon.vue";
 import moment from "moment";
 defineProps({
@@ -63,6 +67,13 @@ defineComponent({
 });
 </script>
 <style lang="scss">
+.state-tag {
+  border: 1px solid currentColor;
+  display: inline-block;
+  padding: 0 1rem;
+  border-radius: 0.4rem;
+  font-size: var(--mu-font-szie);
+}
 .el-select {
   min-width: 80px;
 }

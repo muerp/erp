@@ -3,7 +3,7 @@
     <el-form :model="form">
       <el-row>
         <drag-frame
-          :key="idx"
+          :key="item.key"
           :item="item"
           v-model:active-item="targetItem"
           :index="idx.toString()"
@@ -18,15 +18,10 @@
           <el-form-item :label="item.label">
             <el-input
               :readonly="true"
-              v-model="form[idx]"
               v-if="item.type === 1"
-              :placeholder="item.placeholder"
+              :placeholder="'请输入' + item.label"
             />
-            <el-select
-              v-else-if="item.type === 2"
-              v-model="form[idx]"
-              :placeholder="item.placeholder"
-            >
+            <el-select v-else-if="item.type === 2" :placeholder="item.placeholder">
               <el-option
                 v-for="menu in item.menus"
                 :key="menu.value"
@@ -37,14 +32,12 @@
             <el-date-picker
               :disabled="true"
               v-else-if="item.type === 3"
-              v-model="form[idx]"
               type="date"
               placeholder="选择日期"
               clearable
             />
             <el-date-picker
               v-else-if="item.type === 4"
-              v-model="form[idx]"
               :disabled="true"
               type="daterange"
               range-separator="至"
@@ -64,6 +57,17 @@
             </el-button>
           </el-form-item>
         </drag-frame>
+        <el-dropdown class="adf-c" trigger="click" placement="bottom-end">
+          <el-button class="as-add" type="primary" circle>
+            <svg-icon icon="add"></svg-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-item @click="onAdd(1)"> 输入 </el-dropdown-item>
+            <el-dropdown-item @click="onAdd(2)"> 选择 </el-dropdown-item>
+            <el-dropdown-item @click="onAdd(3)"> 日期 </el-dropdown-item>
+            <el-dropdown-item @click="onAdd(4)"> 日期范围 </el-dropdown-item>
+          </template>
+        </el-dropdown>
       </el-row>
     </el-form>
   </el-row>
@@ -87,9 +91,45 @@ watch(
     form.value = editorStore.searchs.map(() => "");
   }
 );
+const onAdd = (tag: number) => {
+  if (tag === 1) {
+    editorStore.searchs.unshift({
+      type: 1,
+      label: "标签",
+      width: 30,
+      key: "params" + editorStore.searchs.length,
+    });
+  } else if (tag === 2) {
+    editorStore.searchs.unshift({
+      type: 2,
+      label: "选择",
+      placeholder: "请选择",
+      width: 30,
+      menus: [
+        { value: 2, label: "正常" },
+        { value: 1, label: "停用" },
+      ],
+      key: "params" + editorStore.searchs.length,
+    });
+  } else if (tag === 3) {
+    editorStore.searchs.unshift({
+      type: 3,
+      label: "时间",
+      width: 30,
+      key: "params" + editorStore.searchs.length,
+    });
+  } else if (tag === 4) {
+    editorStore.searchs.unshift({
+      type: 4,
+      label: "日期范围",
+      width: 40,
+      key: "params" + editorStore.searchs.length,
+    });
+  }
+};
 const onSelect = (_: any, item: any) => {
   if (item.type >= 99) return;
-  if (editorStore.curEditorItem) {
+  if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
     editorStore.curEditorItem.data.active = false;
   }
   editorStore.curEditorItem = { data: item, type: "search" };
@@ -99,10 +139,10 @@ const onDragEnd = (e: any) => {
   if (e && targetItem.value) {
     updateSearchSort(e, targetItem.value);
   }
-}
+};
 const onUpdateWidth = (item: any) => {
   updateSearchProperty(item);
-}
+};
 const onReset = () => {
   form.value = [];
 };
@@ -119,6 +159,7 @@ const onReset = () => {
 }
 .el-form-item__label {
   height: 28px;
+  line-height: 28px;
   font-size: var(--mu-font-szie);
 }
 .el-form-item__content {
@@ -180,8 +221,29 @@ const onReset = () => {
   .el-button {
     pointer-events: none;
   }
-  .el-date-editor.el-input, .el-date-editor.el-input__wrapper {
+  .el-date-editor.el-input,
+  .el-date-editor.el-input__wrapper {
     width: 100%;
+  }
+  .adf-c {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .as-add {
+    width: 28px;
+    height: 28px;
+    pointer-events: auto;
+    // display: none;
+    .svg-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  &:hover {
+    .as-add {
+      display: flex;
+    }
   }
 }
 </style>
