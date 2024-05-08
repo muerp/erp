@@ -112,7 +112,7 @@
           />
           <el-input v-if="data.type !== 1000" v-model="data.label"> </el-input>
           <div v-else-if="data.parent" class="w-full">
-            <el-form-item label="名称">
+            <el-form-item label="关键词">
               <el-input v-model="data.parent.key" />
             </el-form-item>
             <el-form-item label="宽度">
@@ -126,7 +126,7 @@
               <code-editor
                 :value="JSON.stringify(data.parent.menus)"
                 lang="json"
-                @change="onChangeCode($event, data.parent, 'menus')"
+                @change="onChangeProperty($event, data.parent, 'menus')"
               >
               </code-editor>
             </el-form-item>
@@ -159,7 +159,7 @@
                   :validate-event="true"
                   :predefine="PredefineColors"
                   :model-value="state.color"
-                  @active-change="onChangeCode($event, state, 'color')"
+                  @active-change="onChangeProperty($event, state, 'color')"
                 >
                   <template #default>
                     <div class="d-flex align-center color-select">
@@ -174,27 +174,210 @@
               </div>
             </el-form-item>
             <el-form-item v-else-if="data.parent.type === 100">
-              <el-button
-                :class="{ 'opa-text': data.parent.buttonType === 'text' }"
-                v-for="item in data.parent.buttons"
-                :type="ButtonTypeConfig[item.type].type"
-                :text="data.parent.buttonType === 'text'"
-                :round="data.parent.buttonType === 'round'"
-                :plain="data.parent.buttonType === 'plain'"
-              >
-                {{ ButtonTypeConfig[item.type].label }}
-              </el-button>
+              <el-form-item label="按钮样式">
+                <el-button
+                  link
+                  class="button-type"
+                  :class="{
+                    active: data.parent.buttonType === 'text',
+                  }"
+                  @click="onChangeProperty('text', data.parent, 'buttonType')"
+                >
+                  link
+                </el-button>
+                <el-button
+                  link
+                  class="button-type"
+                  :class="{
+                    active: data.parent.buttonType === 'round',
+                  }"
+                  @click="onChangeProperty('round', data.parent, 'buttonType')"
+                >
+                  circle
+                </el-button>
+                <el-button
+                  link
+                  class="button-type"
+                  :class="{
+                    active: data.parent.buttonType === 'plain',
+                  }"
+                  @click="onChangeProperty('plain', data.parent, 'buttonType')"
+                >
+                  round
+                </el-button>
+              </el-form-item>
+              <el-form-item class="btn-property">
+                <el-checkbox
+                  v-for="item in defaultOps"
+                  :key="item.type + '-b'"
+                  :checked="
+                    data.parent.buttons.findIndex((r) => r.type === item.type) !== -1
+                  "
+                  @change="onChangeOps($event, item)"
+                >
+                  <el-button
+                    :class="{
+                      'opa-text': data.parent.buttonType === 'text',
+                    }"
+                    :type="ButtonTypeConfig[item.type].type"
+                    :text="data.parent.buttonType === 'text'"
+                    :round="data.parent.buttonType === 'round'"
+                    :plain="data.parent.buttonType === 'plain'"
+                  >
+                    {{ ButtonTypeConfig[item.type].label }}
+                  </el-button>
+                </el-checkbox>
+              </el-form-item>
             </el-form-item>
           </div>
         </template>
       </mu-tree>
+    </div>
+    <div
+      v-else-if="
+        editorStore.curEditorItem &&
+        editorStore.curEditorItem.type === 'table-cell' &&
+        editorStore.curEditorItem.data.key !== '_checkbox'
+      "
+      class="property-table flex-1 overflow-auto"
+    >
+      <el-form-item label="名称">
+        <el-input v-model="editorStore.curEditorItem.data.label" />
+      </el-form-item>
+      <el-form-item label="关键词">
+        <el-input v-model="editorStore.curEditorItem.data.key" />
+      </el-form-item>
+      <el-form-item label="宽度">
+        <el-input v-model="editorStore.curEditorItem.data.width" placeholder="自动设置" />
+      </el-form-item>
+      <el-form-item
+        class="w-full d-flex align-top table-menus"
+        label="下拉选择"
+        v-if="editorStore.curEditorItem.data.type === 1"
+      >
+        <code-editor
+          :value="JSON.stringify(editorStore.curEditorItem.data.menus)"
+          lang="json"
+          @change="onChangeProperty($event, editorStore.curEditorItem.data, 'menus')"
+        >
+        </code-editor>
+      </el-form-item>
+      <el-form-item
+        v-else-if="editorStore.curEditorItem.data.type === 6"
+        class="table-state w-full d-flex align-top"
+        label="状态设置"
+      >
+        <div
+          class="d-flex align-center"
+          v-for="(state, idx) in editorStore.curEditorItem.data.map"
+          :key="idx + state.label"
+        >
+          <el-input
+            v-model="state.state"
+            style="flex: 1"
+            input-style="text-align:center;"
+            @blur="onInputMap(state, editorStore.curEditorItem.data.map, idx)"
+          />
+          <el-input
+            class="select-state-color"
+            v-model="state.label"
+            :style="{
+              flex: 2,
+              color: state.color,
+              'background-color': state.color + '30',
+            }"
+          ></el-input>
+          <mu-color-picker
+            :validate-event="true"
+            :predefine="PredefineColors"
+            :model-value="state.color"
+            @active-change="onChangeProperty($event, state, 'color')"
+          >
+            <template #default>
+              <div class="d-flex align-center color-select">
+                <el-tag :color="state.color" size="small" />
+                <svg-icon class="min-arrow" icon="arrow-right"></svg-icon>
+              </div>
+            </template>
+          </mu-color-picker>
+          <el-button
+            link
+            @click="onDeleteMap(editorStore.curEditorItem.data.map, state.state)"
+          >
+            <svg-icon icon="trash" />
+          </el-button>
+        </div>
+      </el-form-item>
+      <div v-else-if="editorStore.curEditorItem.data.type === 100">
+        <el-form-item label="按钮样式">
+          <el-button
+            link
+            class="button-type"
+            :class="{ active: editorStore.curEditorItem.data.buttonType === 'text' }"
+            @click="
+              onChangeProperty('text', editorStore.curEditorItem.data, 'buttonType')
+            "
+          >
+            link
+          </el-button>
+          <el-button
+            link
+            class="button-type"
+            :class="{ active: editorStore.curEditorItem.data.buttonType === 'round' }"
+            @click="
+              onChangeProperty('round', editorStore.curEditorItem.data, 'buttonType')
+            "
+          >
+            circle
+          </el-button>
+          <el-button
+            link
+            class="button-type"
+            :class="{ active: editorStore.curEditorItem.data.buttonType === 'plain' }"
+            @click="
+              onChangeProperty('plain', editorStore.curEditorItem.data, 'buttonType')
+            "
+          >
+            round
+          </el-button>
+        </el-form-item>
+        <el-form-item class="btn-property">
+          <el-checkbox
+            v-for="item in defaultOps"
+            :key="item.type + '-b'"
+            :checked="
+              editorStore.curEditorItem.data.buttons.findIndex(
+                (r) => r.type === item.type
+              ) !== -1
+            "
+            @change="onChangeOps($event, item)"
+          >
+            <el-button
+              :class="{
+                'opa-text': editorStore.curEditorItem.data.buttonType === 'text',
+              }"
+              :type="ButtonTypeConfig[item.type].type"
+              :text="editorStore.curEditorItem.data.buttonType === 'text'"
+              :round="editorStore.curEditorItem.data.buttonType === 'round'"
+              :plain="editorStore.curEditorItem.data.buttonType === 'plain'"
+            >
+              {{ ButtonTypeConfig[item.type].label }}
+            </el-button>
+          </el-checkbox>
+        </el-form-item>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ElMessage, ElColorPicker } from "element-plus";
 import { ref, watch } from "vue";
-import { ButtonTypeConfig, SeartFrameType, PredefineColors } from "../../../home/utils";
+import {
+  ButtonTypeConfig,
+  SeartFrameType,
+  PredefineColors,
+  defaultOps,
+} from "../../../home/utils";
 import { editorStore } from "../editStore";
 const bts = ref([
   { type: 1, enabled: true, text: "新建行" },
@@ -240,10 +423,7 @@ const onChangeButton = (item: any) => {
     editorStore.buttons.sort((r1: any, r2: any) => (r1.type > r2.type ? 1 : -1));
   }
 };
-const onOpenColor = () => {};
-const onChangeColor = (e, c) => {
-  console.log("onChangeColor---", e, c);
-};
+
 const onMove = ({ sourceIndex, targetIndex, item, position }: any, list: any[]) => {
   if (!item.children || item.children.length === 0) return;
   let idx = targetIndex + (position === "bottom" ? 1 : 0);
@@ -279,8 +459,19 @@ const onInputMap = (v, map, old) => {
 const onDelete = (list: any[], index: number) => {
   list.splice(index, 1);
 };
-const onChangeCode = (value: any, data: any, key: string) => {
+const onChangeProperty = (value: any, data: any, key: string) => {
   data[key] = value;
+};
+const onChangeOps = (checked: boolean, item: any) => {
+  const idx = editorStore.curEditorItem.data.buttons.findIndex(
+    (r) => r.type === item.type
+  );
+  if (idx !== -1) {
+    editorStore.curEditorItem.data.buttons.splice(idx, 1);
+  } else {
+    editorStore.curEditorItem.data.buttons.push(item);
+    editorStore.curEditorItem.data.buttons.sort((r1, r2) => (r1.type > r2.type ? 1 : -1));
+  }
 };
 </script>
 <style lang="scss">
@@ -341,6 +532,7 @@ const onChangeCode = (value: any, data: any, key: string) => {
 .table-menus {
   align-items: flex-start;
   margin-right: 0;
+  margin-top: 10px !important;
   .el-form-item__content {
     height: 200px;
     position: relative;
@@ -409,6 +601,13 @@ const onChangeCode = (value: any, data: any, key: string) => {
   .align-top {
     align-items: flex-start;
   }
+  .el-input__inner {
+    color: #eee;
+  }
+  .el-form-item__label {
+    min-width: 60px;
+    text-align: left;
+  }
 }
 .property-dashboard {
   overflow: auto;
@@ -470,6 +669,30 @@ const onChangeCode = (value: any, data: any, key: string) => {
   }
   .p-text {
     margin-left: 6px;
+  }
+}
+.btn-property {
+  .el-button {
+    pointer-events: none;
+    font-size: 13px;
+    padding: 8px 15px;
+    height: 24px;
+  }
+  .el-checkbox {
+    margin: 10px 1rem;
+  }
+}
+.button-type.is-link {
+  padding: 4px 10px;
+  &:hover {
+    color: #ccc;
+  }
+  &.active {
+    background-color: #3f3f3f;
+    color: #ccc;
+    &:hover {
+      background-color: #2f2f2f;
+    }
   }
 }
 </style>

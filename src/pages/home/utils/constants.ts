@@ -493,6 +493,22 @@ export const SystemIcons = [
     'tree1',  'user',     'yh'
 ]
 
-
+export const defaultOps = [
+    {
+        "type": 1
+    },
+    {
+        "type": 2
+    },
+    {
+        "type": 3
+    },
+    {
+        "type": 4
+    },
+    {
+        "type": 5
+    }
+]
 
 export const PredefineColors = ['#E63415', '#06341C', '#E6F415', '#E6341F']

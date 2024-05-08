@@ -14,13 +14,28 @@
     >
       <el-table-column
         v-if="editorStore.tables.select"
+        :prop="{key: '_checkbox'}"
         type="selection"
+        :label-class-name="
+          editorStore.curEditorItem &&
+          editorStore.curEditorItem.type === 'table-cell' &&
+          editorStore.curEditorItem.data.key === '_checkbox'
+            ? 'cell-active cell-active-first'
+            : ''
+        "
         width="55"
         align="center"
       />
       <el-table-column
         v-for="header in headers"
-        :prop="header.key"
+        :prop="header"
+        :label-class-name="
+          editorStore.curEditorItem &&
+          editorStore.curEditorItem.type === 'table-cell' &&
+          editorStore.curEditorItem.data.key === header.key
+            ? 'cell-active'
+            : ''
+        "
         :label="header.label"
         :key="header.key"
         align="center"
@@ -61,7 +76,7 @@ const headers = computed(() => {
   return editorStore.tables.headers.filter((r: any) => !r.disabled);
 });
 
-const onTap = () => {
+const onTap = (e) => {
   if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
     editorStore.curEditorItem.data.active = false;
   }
@@ -88,8 +103,15 @@ const handleSizeChange = () => {
 const handleCurrentChange = () => {
   fetchTableData();
 };
-const onClickHeader = (cell) => {
-  console.log("onClickHeader", cell);
+const onClickHeader = (cell, e) => {
+  e.stopPropagation();
+  if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
+    editorStore.curEditorItem.data.active = false;
+  }
+  editorStore.curEditorItem = {
+    type: "table-cell",
+    data: cell.property,
+  };
 };
 </script>
 <style lang="scss">
@@ -99,6 +121,9 @@ const onClickHeader = (cell) => {
   &.active {
     border: 1px solid #27ae4b;
   }
+  th {
+    cursor: pointer;
+  }
 }
 .el-table {
   font-size: var(--mu-font-szie);
@@ -107,5 +132,23 @@ const onClickHeader = (cell) => {
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
+}
+.cell-active {
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+    border: 2px solid #27ae4b !important;
+    border-top-width: 3px !important;
+  }
+}
+.cell-active-first {
+    &:before {
+      border-left-width: 3px !important;
+    }
 }
 </style>
