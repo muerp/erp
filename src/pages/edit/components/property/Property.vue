@@ -116,7 +116,7 @@
               <el-input v-model="data.parent.key" />
             </el-form-item>
             <el-form-item label="宽度">
-              <el-input v-model="data.parent.width" placeholder="自动设置"/>
+              <el-input v-model="data.parent.width" placeholder="自动设置" />
             </el-form-item>
             <el-form-item
               class="w-full d-flex align-top table-menus"
@@ -131,7 +131,7 @@
               </code-editor>
             </el-form-item>
             <el-form-item
-              v-if="data.parent.type === 6"
+              v-else-if="data.parent.type === 6"
               class="table-state w-full d-flex align-top"
               label="状态设置"
             >
@@ -151,41 +151,39 @@
                   v-model="state.label"
                   :style="{
                     flex: 2,
-                    color: StateColors[state.type].value,
-                    'background-color': StateColors[state.type].value + '30',
+                    color: state.color,
+                    'background-color': state.color + '30',
                   }"
                 ></el-input>
-                <el-dropdown
-                  placement="left-start"
-                  trigger="click"
-                  popper-class="color-drop"
+                <mu-color-picker
+                  :validate-event="true"
+                  :predefine="PredefineColors"
+                  :model-value="state.color"
+                  @active-change="onChangeCode($event, state, 'color')"
                 >
-                  <div class="d-flex align-center color-select">
-                    <el-tag :color="StateColors[state.type].value" size="small" />
-                    <svg-icon class="min-arrow" icon="arrow-right"></svg-icon>
-                  </div>
-                  <template #dropdown>
-                    <el-dropdown-menu>
-                      <el-dropdown-item
-                        v-for="item of StateColors"
-                        :key="item.value"
-                        :class="{ active: state.type === item.label }"
-                        @click="onChangeCode(item.label, state, 'type')"
-                      >
-                        <el-tag
-                          :color="item.value"
-                          style="margin-right: 8px; width: 20px; height: 20px"
-                          size="small"
-                        />
-                        <span :style="{ color: item.value }">{{ item.label }}</span>
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
+                  <template #default>
+                    <div class="d-flex align-center color-select">
+                      <el-tag :color="state.color" size="small" />
+                      <svg-icon class="min-arrow" icon="arrow-right"></svg-icon>
+                    </div>
                   </template>
-                </el-dropdown>
+                </mu-color-picker>
                 <el-button link @click="onDeleteMap(data.parent.map, state.state)">
                   <svg-icon icon="trash" />
                 </el-button>
               </div>
+            </el-form-item>
+            <el-form-item v-else-if="data.parent.type === 100">
+              <el-button
+                :class="{ 'opa-text': data.parent.buttonType === 'text' }"
+                v-for="item in data.parent.buttons"
+                :type="ButtonTypeConfig[item.type].type"
+                :text="data.parent.buttonType === 'text'"
+                :round="data.parent.buttonType === 'round'"
+                :plain="data.parent.buttonType === 'plain'"
+              >
+                {{ ButtonTypeConfig[item.type].label }}
+              </el-button>
             </el-form-item>
           </div>
         </template>
@@ -194,9 +192,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ElMessage } from "element-plus";
+import { ElMessage, ElColorPicker } from "element-plus";
 import { ref, watch } from "vue";
-import { ButtonTypeConfig, SeartFrameType, StateColors } from "../../../home/utils";
+import { ButtonTypeConfig, SeartFrameType, PredefineColors } from "../../../home/utils";
 import { editorStore } from "../editStore";
 const bts = ref([
   { type: 1, enabled: true, text: "新建行" },
@@ -242,6 +240,10 @@ const onChangeButton = (item: any) => {
     editorStore.buttons.sort((r1: any, r2: any) => (r1.type > r2.type ? 1 : -1));
   }
 };
+const onOpenColor = () => {};
+const onChangeColor = (e, c) => {
+  console.log("onChangeColor---", e, c);
+};
 const onMove = ({ sourceIndex, targetIndex, item, position }: any, list: any[]) => {
   if (!item.children || item.children.length === 0) return;
   let idx = targetIndex + (position === "bottom" ? 1 : 0);
@@ -260,7 +262,7 @@ const onDeleteMap = (map: any, key: string) => {
   delete map[key];
 };
 const onInputMap = (v, map, old) => {
-  if (v.state === '') return;
+  if (v.state === "") return;
   if (map[v.state] && v.state !== old) {
     v.state = old;
     ElMessage({
@@ -269,7 +271,7 @@ const onInputMap = (v, map, old) => {
       plain: true,
       duration: 2000,
     });
-  } else if(v.state && v.state !== old){
+  } else if (v.state && v.state !== old) {
     map[v.state] = map[old];
     delete map[old];
   }
@@ -310,13 +312,29 @@ const onChangeCode = (value: any, data: any, key: string) => {
   }
 }
 .color-drop {
+  .el-dropdown__list {
+    padding: 0 10px 16px;
+  }
   .el-dropdown-menu__item {
+    padding: 0 6px;
     &:hover {
       background-color: #333;
     }
   }
   .el-dropdown-menu__item.active {
     background-color: #444;
+  }
+  .drop-label {
+    padding: 16px 8px 4px;
+    color: #ccc;
+    font-size: 12px;
+  }
+  .color-custom {
+    padding: 8px 8px 4px;
+    cursor: pointer;
+  }
+  .svg-icon {
+    color: #fff;
   }
 }
 

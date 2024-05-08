@@ -6,22 +6,22 @@
     :min-width="400"
   >
     <div class="property-nav">
-      <el-tooltip content="组件" placement="left">
+      <el-tooltip content="组件" placement="right">
         <el-button text :class="{ active: curTab === 0 }" @click="onChangeTab(0)">
           <svg-icon icon="buju"></svg-icon>
         </el-button>
       </el-tooltip>
-      <el-tooltip content="属性" placement="left">
+      <el-tooltip content="属性" placement="right">
         <el-button text :class="{ active: curTab === 1 }" @click="onChangeTab(1)">
           <svg-icon icon="props"></svg-icon>
         </el-button>
       </el-tooltip>
-      <el-tooltip content="数据" placement="left">
+      <el-tooltip content="数据" placement="right">
         <el-button text :class="{ active: curTab === 2 }" @click="onChangeTab(2)">
           <svg-icon icon="json"></svg-icon>
         </el-button>
       </el-tooltip>
-      <el-tooltip content="代码" placement="left">
+      <el-tooltip content="代码" placement="right">
         <el-button text :class="{ active: curTab === 3 }" @click="onChangeTab(3)">
           <svg-icon icon="net"></svg-icon>
         </el-button>

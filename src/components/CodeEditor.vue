@@ -2,7 +2,7 @@
   <div class="code-editor" ref="editorRef"></div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, nextTick, defineEmits } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import { monaco } from "./customMonaco";
 const props = defineProps({
   value: { type: String, default: "" },

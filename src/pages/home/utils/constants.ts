@@ -374,7 +374,6 @@ export enum HeaderType {
 export const testTables = {
     dataUrl: '',
     select: true,
-    buttonType: 'text', //'text'|'round'|'plain'
     headers: [
         {
             "type": 1,
@@ -428,27 +427,27 @@ export const testTables = {
             map: {
                 1: {
                     label: '成功',
-                    type: 'red',
+                    color: '#E63415',
                     state: 1,
                 },
                 2: {
                     label: '失败',
-                    type: 'green',
+                    color: '#FF6600',
                     state: 2,
                 },
                 3: {
                     label: '信息',
-                    type: 'yellow',
+                    color: '#FFDE0A',
                     state: 3,
                 },
                 4: {
                     label: '警告',
-                    type: 'blue',
+                    color: '#4167F0',
                     state: 4,
                 },
                 5: {
                     label: '成功',
-                    type: 'cyan',
+                    color: '#6222C9',
                     state: 5,
                 }
             },
@@ -458,6 +457,7 @@ export const testTables = {
             label: '操作',
             width: 280,
             url: '',
+            buttonType: 'text', //'text'|'round'|'plain'
             "buttons": [
                 {
                     "type": 1
@@ -495,33 +495,4 @@ export const SystemIcons = [
 
 
 
-export const StateColors = {
-    red: {
-      value: '#E63415',
-      label: 'red',
-    },
-    orange: {
-      value: '#FF6600',
-      label: 'orange',
-    },
-    yellow: {
-      value: '#FFDE0A',
-      label: 'yellow',
-    },
-    green: {
-      value: '#1EC79D',
-      label: 'green',
-    },
-    cyan: {
-      value: '#14CCCC',
-      label: 'cyan',
-    },
-    blue: {
-      value: '#4167F0',
-      label: 'blue',
-    },
-    purple: {
-      value: '#6222C9',
-      label: 'purple',
-    },
-}
+export const PredefineColors = ['#E63415', '#06341C', '#E6F415', '#E6341F']

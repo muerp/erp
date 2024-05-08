@@ -1,5 +1,12 @@
 <template>
-  <el-row class="add-search">
+  <el-row
+    class="add-search"
+    :class="{
+      active:
+        editorStore.curEditorItem && editorStore.curEditorItem.type === 'search-box',
+    }"
+    @click="onTap"
+  >
     <el-form :model="form">
       <el-row>
         <drag-frame
@@ -57,8 +64,15 @@
             </el-button>
           </el-form-item>
         </drag-frame>
-        <el-dropdown class="adf-c" trigger="click" placement="bottom-end">
-          <el-button class="as-add" type="primary" circle>
+        <el-dropdown
+          v-if="
+            editorStore.curEditorItem && editorStore.curEditorItem.type === 'search-box'
+          "
+          class="adf-c"
+          trigger="click"
+          placement="bottom-end"
+        >
+          <el-button class="as-add" type="info">
             <svg-icon icon="add"></svg-icon>
           </el-button>
           <template #dropdown>
@@ -91,6 +105,14 @@ watch(
     form.value = editorStore.searchs.map(() => "");
   }
 );
+const onTap = () => {
+  if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
+    editorStore.curEditorItem.data.active = false;
+  }
+  editorStore.curEditorItem = {
+    type: "search-box",
+  };
+};
 const onAdd = (tag: number) => {
   if (tag === 1) {
     editorStore.searchs.unshift({
@@ -127,7 +149,8 @@ const onAdd = (tag: number) => {
     });
   }
 };
-const onSelect = (_: any, item: any) => {
+const onSelect = (e: any, item: any) => {
+  e.stopPropagation();
   if (item.type >= 99) return;
   if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
     editorStore.curEditorItem.data.active = false;
@@ -170,9 +193,13 @@ const onReset = () => {
   font-size: var(--mu-font-szie);
 }
 .add-search {
+  border: 1px solid transparent;
   .el-select {
     // min-width: 180px;
     min-width: 0;
+  }
+  &.active {
+    border-color: #27ae4b;
   }
 }
 
@@ -231,13 +258,13 @@ const onReset = () => {
     top: 0;
   }
   .as-add {
-    width: 28px;
-    height: 28px;
+    width: 20px;
+    height: 20px;
     pointer-events: auto;
-    // display: none;
+    border-radius: 0;
     .svg-icon {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
     }
   }
   &:hover {

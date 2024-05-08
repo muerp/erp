@@ -1,5 +1,5 @@
 <template>
-  <div class="add-table flex-1 mt-2" @click="onTap" :class="{active: editorStore.curEditorItem&&editorStore.curEditorItem.type==='table'}">
+  <div class="add-table flex-1 pt-2" @click="onTap" :class="{active: editorStore.curEditorItem&&editorStore.curEditorItem.type==='table'}">
     <el-table :data="editorStore.rows" style="width: 100%" border>
       <el-table-column
         v-if="editorStore.tables.select"
@@ -30,7 +30,7 @@
         v-model:page-size="pageSize"
         :background="true"
         layout="prev, pager, next, jumper"
-        :total="1000"
+        :total="100"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />

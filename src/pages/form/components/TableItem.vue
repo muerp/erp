@@ -30,8 +30,8 @@
     v-else-if="header.type === HeaderType.state && header.map[data[header.key]]"
     class="state-tag"
     :style="{
-      'color':StateColors[header.map[data[header.key]].type].value,
-      'background-color': StateColors[header.map[data[header.key]].type].value+'30'
+      'color':header.map[data[header.key]].color,
+      'background-color': header.map[data[header.key]].color+'30'
     }"
     :disable-transitions="true"
   >
@@ -39,12 +39,12 @@
   </div>
   <div class="table-opas w-full" v-else-if="header.type === HeaderType.opa">
     <el-button
-      :class="{ 'opa-text': config.buttonType === 'text' }"
+      :class="{ 'opa-text': header.buttonType === 'text' }"
       v-for="item in header.buttons"
       :type="ButtonTypeConfig[item.type].type"
-      :text="config.buttonType === 'text'"
-      :round="config.buttonType === 'round'"
-      :plain="config.buttonType === 'plain'"
+      :text="header.buttonType === 'text'"
+      :round="header.buttonType === 'round'"
+      :plain="header.buttonType === 'plain'"
     >
       {{ ButtonTypeConfig[item.type].label }}
     </el-button>
@@ -52,7 +52,7 @@
 </template>
 <script lang="ts" setup>
 import { defineComponent } from "vue";
-import { HeaderType, ButtonTypeConfig, StateColors } from "../../home/utils/constants";
+import { HeaderType, ButtonTypeConfig } from "../../home/utils/constants";
 import TableIcon from "./TableIcon.vue";
 import moment from "moment";
 defineProps({
@@ -92,18 +92,6 @@ defineComponent({
     height: 24px;
     font-size: var(--mu-font-szie);
     margin: 0 3px;
-  }
-}
-.opa-text {
-  margin: 0;
-  text-decoration: underline;
-  padding: 3px 4px;
-  &:hover {
-    opacity: 0.7;
-  }
-  &.is-text:not(.is-disabled):active {
-    background-color: transparent;
-    color: #fff;
   }
 }
 </style>

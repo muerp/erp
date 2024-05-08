@@ -24,4 +24,5 @@ for (const [key, component] of Object.entries(comps)) {
 }
 app.use(ElementPlus);
 app.use(ErpUI);
+
 app.mount('#app')

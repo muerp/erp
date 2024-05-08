@@ -94,8 +94,7 @@ const onMenu = (item: any) => {
 .add-buttons {
   border: 1px solid transparent;
   border-top-color: #666;
-  padding: 6px 0 6px;
-  margin: 10px 0;
+  padding: 26px 0 0;
   cursor: pointer;
   &.active {
     border-color: #27ae4b;
