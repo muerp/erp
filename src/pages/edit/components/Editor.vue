@@ -1,5 +1,5 @@
 <template>
-  <div class="page w-full h-full">
+  <div class="page w-full h-full" :class="{ 'full-screen': isFullscreen }">
     <el-row type="flex" class="w-full no-wrap overflow-hidden" style="height: 100%">
       <mu-dragable init-width="200" style="border-right: 1px solid #999" :min-width="160" v-show="showLeft">
         <el-row align="middle" draggable="true" justify="center" class="mt-1 mb-1">
@@ -33,7 +33,7 @@
           </mu-tree>
         </el-scrollbar>
       </mu-dragable>
-      <editor-content @change-sidebar="onSidebar"/>
+      <editor-content v-model:is-fullscreen="isFullscreen" @change-sidebar="onSidebar"/>
     </el-row>
   </div>
 </template>
@@ -44,6 +44,7 @@ import { LoadingState } from "../../home/utils";
 import EditorContent from "./EditorContent.vue";
 const activeItem = ref();
 const showLeft = ref(true);
+const isFullscreen = ref(false);
 defineComponent({
   components: {
     EditorContent,

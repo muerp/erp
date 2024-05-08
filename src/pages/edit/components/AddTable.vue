@@ -1,6 +1,17 @@
 <template>
-  <div class="add-table flex-1 pt-2" @click="onTap" :class="{active: editorStore.curEditorItem&&editorStore.curEditorItem.type==='table'}">
-    <el-table :data="editorStore.rows" style="width: 100%" border>
+  <div
+    class="add-table flex-1 pt-2"
+    @click="onTap"
+    :class="{
+      active: editorStore.curEditorItem && editorStore.curEditorItem.type === 'table',
+    }"
+  >
+    <el-table
+      :data="editorStore.rows"
+      style="width: 100%"
+      border
+      @header-click="onClickHeader"
+    >
       <el-table-column
         v-if="editorStore.tables.select"
         type="selection"
@@ -57,7 +68,7 @@ const onTap = () => {
   editorStore.curEditorItem = {
     type: "table",
   };
-}
+};
 
 const curPage = ref(1);
 const pageSize = ref(20);
@@ -76,6 +87,9 @@ const handleSizeChange = () => {
 };
 const handleCurrentChange = () => {
   fetchTableData();
+};
+const onClickHeader = (cell) => {
+  console.log("onClickHeader", cell);
 };
 </script>
 <style lang="scss">

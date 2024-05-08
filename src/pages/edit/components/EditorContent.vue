@@ -1,11 +1,20 @@
 <template>
-  <div class="flex-1 editor-inner d-column overflow-hidden" :class="{'full-screen': isFullscreen}">
+  <div
+    class="flex-1 editor-inner d-column overflow-hidden"
+  >
     <el-row class="editor-header align-center" justify="space-between">
       <el-row class="align-center">
-        <sidebar-icon v-model="showLeft" class="mr-2 ml-1" @update:model-value="handleSidebar"/>
+        <sidebar-icon
+          v-model="showLeft"
+          class="mr-2 ml-1"
+          @update:model-value="handleSidebar"
+        />
       </el-row>
-      <el-row>
-         <sidebar-icon v-model="showRight" direction="right" class="mr-2 ml-1"/>
+      <el-row align="middle">
+        <el-button link @click="onFull">
+          <svg-icon :icon="isFullscreen ? 'no-full' : 'full'"></svg-icon>
+        </el-button>
+        <sidebar-icon v-model="showRight" direction="right" class="mr-2 ml-1" />
       </el-row>
     </el-row>
     <el-row class="no-wrap h-full flex-1 overflow-hidden">
@@ -21,7 +30,9 @@
           </el-row>
         </el-row>
       </el-row>
-      <property-dashboard :style="{display: showRight? 'flex':'none'}"></property-dashboard>
+      <property-dashboard
+        :style="{ display: showRight ? 'flex' : 'none' }"
+      ></property-dashboard>
     </el-row>
   </div>
 </template>
@@ -32,7 +43,7 @@ import AddSearch from "./AddSearch.vue";
 import AddTable from "./AddTable.vue";
 import AddNav from "./AddNav.vue";
 import PropertyDashboard from "./property/PropertyDashboard.vue";
-import SidebarIcon from './SidebarIcon.vue'
+import SidebarIcon from "./SidebarIcon.vue";
 
 defineComponent({
   components: {
@@ -41,27 +52,31 @@ defineComponent({
     AddNav,
     AddTable,
     PropertyDashboard,
-    SidebarIcon
+    SidebarIcon,
   },
 });
-const emit = defineEmits(['change-sidebar'])
-const isFullscreen = ref(true);
+const props = defineProps({
+  isFullscreen: { type: Boolean, default: false },
+});
+const emit = defineEmits(["change-sidebar", 'update:isFullscreen']);
+const onFull = () => {
+  emit('update:isFullscreen', !props.isFullscreen)
+}
 const elementInfo = ref({
   tree: false,
   search: true,
   button: true,
   table: true,
 });
-provide('elementInfo', elementInfo);
+provide("elementInfo", elementInfo);
 const showLeft = ref(true);
 const showRight = ref(true);
 
 const handleSidebar = () => {
-    emit('change-sidebar', showLeft.value);
-}
+  emit("change-sidebar", showLeft.value);
+};
 </script>
 <style lang="scss">
-
 .editor-inner {
   position: relative;
   .el-scrollbar__view {
@@ -90,12 +105,12 @@ const handleSidebar = () => {
   right: 0;
 }
 .full-screen {
-    position: fixed;
-    background-color: #181818;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 9;
+  position: fixed;
+  background-color: #181818;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 9;
 }
 </style>
