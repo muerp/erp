@@ -110,7 +110,8 @@
             :class="{ hidden: !data.children || data.children.length === 0 }"
             icon="arrow-right"
           />
-          <el-input v-if="data.type !== 1000" v-model="data.label"> </el-input>
+          <el-input class="table-label" v-if="data.type !== 1000" v-model="data.label">
+          </el-input>
           <div v-else-if="data.parent" class="w-full">
             <el-form-item label="关键词">
               <el-input v-model="data.parent.key" />
@@ -138,11 +139,11 @@
               <div
                 class="d-flex align-center"
                 v-for="(state, idx) in data.parent.map"
-                :key="idx + state.label"
+                :key="idx + '-' + state.state"
               >
                 <el-input
                   v-model="state.state"
-                  style="flex: 1"
+                  style="width: 40px"
                   input-style="text-align:center;"
                   @blur="onInputMap(state, data.parent.map, idx)"
                 />
@@ -270,11 +271,11 @@
         <div
           class="d-flex align-center"
           v-for="(state, idx) in editorStore.curEditorItem.data.map"
-          :key="idx + state.label"
+          :key="idx + '-' + state.state"
         >
           <el-input
             v-model="state.state"
-            style="flex: 1"
+            style="width: 40px"
             input-style="text-align:center;"
             @blur="onInputMap(state, editorStore.curEditorItem.data.map, idx)"
           />
@@ -494,12 +495,17 @@ const onChangeOps = (checked: boolean, item: any) => {
 }
 .color-select {
   border: 1px solid #999;
-  padding: 0 10px;
+  padding: 0 6px;
   border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
   height: 28px;
   .el-tag--small {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
+    border: none;
+  }
+  .svg-icon {
+    width: 12px;
+    height: 12px;
   }
 }
 .color-drop {
@@ -576,6 +582,10 @@ const onChangeOps = (checked: boolean, item: any) => {
   margin-left: 10px;
 }
 .table-state {
+  border: 1px solid #1f1f1f;
+  padding: 10px 6px;
+  border-radius: 4px;
+  background-color: #1f1f1f;
   .el-input {
     margin: 2px 2px;
   }
@@ -594,6 +604,7 @@ const onChangeOps = (checked: boolean, item: any) => {
   }
   .el-form-item {
     margin-left: 0;
+    color: #eee;
   }
   .el-input {
     height: 28px;
@@ -601,12 +612,14 @@ const onChangeOps = (checked: boolean, item: any) => {
   .align-top {
     align-items: flex-start;
   }
-  .el-input__inner {
-    color: #eee;
-  }
   .el-form-item__label {
     min-width: 60px;
     text-align: left;
+  }
+}
+.table-label {
+  .el-input__inner {
+    color: #eee;
   }
 }
 .property-dashboard {

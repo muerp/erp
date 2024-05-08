@@ -427,7 +427,7 @@ export const testTables = {
             map: {
                 1: {
                     label: '成功',
-                    color: '#E63415',
+                    color: '#0CFF75',
                     state: 1,
                 },
                 2: {
