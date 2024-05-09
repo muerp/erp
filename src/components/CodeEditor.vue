@@ -2,7 +2,7 @@
   <div class="code-editor" ref="editorRef"></div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, nextTick } from "vue";
+import { onMounted, ref } from "vue";
 import { monaco } from "./customMonaco";
 const props = defineProps({
   value: { type: String, default: "" },
@@ -40,7 +40,7 @@ onMounted(() => {
     editor.setValue(formattedText);
   }
 
-    editor.onDidChangeModelContent((e) => {
+    editor.onDidChangeModelContent(() => {
         if (props.lang === 'json') {
             try {
                 emit('change', JSON.parse(editor.getValue()));

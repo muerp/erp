@@ -228,9 +228,9 @@
                   v-for="item in defaultOps"
                   :key="item.type + '-b'"
                   :checked="
-                    data.parent.buttons.findIndex((r) => r.type === item.type) !== -1
+                    data.parent.buttons.findIndex((r: any) => r.type === item.type) !== -1
                   "
-                  @change="onChangeOps($event, item)"
+                  @change="onChangeOps(item)"
                 >
                   <el-button
                     :class="{
@@ -371,10 +371,10 @@
             :key="item.type + '-b'"
             :checked="
               editorStore.curEditorItem.data.buttons.findIndex(
-                (r) => r.type === item.type
+                (r: any) => r.type === item.type
               ) !== -1
             "
-            @change="onChangeOps($event, item)"
+            @change="onChangeOps(item)"
           >
             <el-button
               :class="{
@@ -394,7 +394,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ElMessage, ElColorPicker } from "element-plus";
+import { ElMessage } from "element-plus";
 import { ref, watch } from "vue";
 import {
   ButtonTypeConfig,
@@ -463,7 +463,7 @@ const onAdd = (list: any[]) => {
   });
 };
 const onAddState = (list: any) => {
-  const p = Math.max(...Object.keys(list));
+  const p = Math.max(...Object.keys(list).map(n => ~~n));
   const m = ~~p + 1;
   list[m] = {
     label: "状态",
@@ -474,7 +474,7 @@ const onAddState = (list: any) => {
 const onDeleteMap = (map: any, key: string) => {
   delete map[key];
 };
-const onInputMap = (v, map, old) => {
+const onInputMap = (v:any, map:any, old:any) => {
   if (v.state === "") return;
   if (map[v.state] && v.state !== old) {
     v.state = old;
@@ -495,15 +495,15 @@ const onDelete = (list: any[], index: number) => {
 const onChangeProperty = (value: any, data: any, key: string) => {
   data[key] = value;
 };
-const onChangeOps = (checked: boolean, item: any) => {
+const onChangeOps = (item: any) => {
   const idx = editorStore.curEditorItem.data.buttons.findIndex(
-    (r) => r.type === item.type
+    (r:any) => r.type === item.type
   );
   if (idx !== -1) {
     editorStore.curEditorItem.data.buttons.splice(idx, 1);
   } else {
     editorStore.curEditorItem.data.buttons.push(item);
-    editorStore.curEditorItem.data.buttons.sort((r1, r2) => (r1.type > r2.type ? 1 : -1));
+    editorStore.curEditorItem.data.buttons.sort((r1:any, r2:any) => (r1.type > r2.type ? 1 : -1));
   }
 };
 </script>

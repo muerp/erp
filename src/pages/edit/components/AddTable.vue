@@ -14,7 +14,7 @@
     >
       <el-table-column
         v-if="editorStore.tables.select"
-        :prop="{key: '_checkbox'}"
+        :prop="{key: '_checkbox'} as any"
         type="selection"
         :label-class-name="
           editorStore.curEditorItem &&
@@ -76,7 +76,7 @@ const headers = computed(() => {
   return editorStore.tables.headers.filter((r: any) => !r.disabled);
 });
 
-const onTap = (e) => {
+const onTap = () => {
   if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
     editorStore.curEditorItem.data.active = false;
   }
@@ -103,7 +103,7 @@ const handleSizeChange = () => {
 const handleCurrentChange = () => {
   fetchTableData();
 };
-const onClickHeader = (cell, e) => {
+const onClickHeader = (cell: any, e: any) => {
   e.stopPropagation();
   if (editorStore.curEditorItem && editorStore.curEditorItem.data) {
     editorStore.curEditorItem.data.active = false;
