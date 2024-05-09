@@ -45,12 +45,21 @@
               >
                 <template #default="{ data, index }">
                   <el-form-item label="标签">
-                    <el-input v-model="data.label" placeholder=""></el-input>
+                    <el-input
+                      v-model="data.label"
+                      placeholder=""
+                      class="state-label"
+                    ></el-input>
                   </el-form-item>
                   <el-form-item label="状态">
-                    <el-input v-model="data.value" placeholder=""></el-input>
+                    <el-input
+                      v-model="data.value"
+                      placeholder=""
+                      class="state-value"
+                    ></el-input>
                   </el-form-item>
                   <el-button
+                    class="trash-delete"
                     text
                     @click="onDelete(editorStore.curEditorItem.data.menus, index)"
                   >
@@ -136,6 +145,13 @@
               class="table-state w-full d-flex align-top"
               label="状态设置"
             >
+              <el-button
+                text
+                class="menu-add pos-absolute"
+                @click="onAddState(data.parent.map)"
+              >
+                <svg-icon icon="add"></svg-icon>
+              </el-button>
               <div
                 class="d-flex align-center"
                 v-for="(state, idx) in data.parent.map"
@@ -174,7 +190,7 @@
                 </el-button>
               </div>
             </el-form-item>
-            <el-form-item v-else-if="data.parent.type === 100">
+            <div v-else-if="data.parent.type === 100">
               <el-form-item label="按钮样式">
                 <el-button
                   link
@@ -229,7 +245,7 @@
                   </el-button>
                 </el-checkbox>
               </el-form-item>
-            </el-form-item>
+            </div>
           </div>
         </template>
       </mu-tree>
@@ -268,6 +284,13 @@
         class="table-state w-full d-flex align-top"
         label="状态设置"
       >
+        <el-button
+          text
+          class="menu-add pos-absolute"
+          @click="onAddState(editorStore.curEditorItem.data.map)"
+        >
+          <svg-icon icon="add"></svg-icon>
+        </el-button>
         <div
           class="d-flex align-center"
           v-for="(state, idx) in editorStore.curEditorItem.data.map"
@@ -438,6 +461,15 @@ const onAdd = (list: any[]) => {
     label: "",
     value: "",
   });
+};
+const onAddState = (list: any) => {
+  const p = Math.max(...Object.keys(list));
+  const m = ~~p + 1;
+  list[m] = {
+    label: "状态",
+    color: "#999",
+    state: m,
+  };
 };
 const onDeleteMap = (map: any, key: string) => {
   delete map[key];
@@ -660,10 +692,14 @@ const onChangeOps = (checked: boolean, item: any) => {
   left: -40px;
   top: 40px;
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   background-color: #3d3d3d;
   box-shadow: 0 3px 0 rgba(12, 12, 12, 0.03);
+  .svg-icon {
+    width: 16px;
+    height: 16px;
+  }
 }
 .property-button {
   padding: 10px 16px;
@@ -707,5 +743,18 @@ const onChangeOps = (checked: boolean, item: any) => {
       background-color: #2f2f2f;
     }
   }
+}
+.state-label {
+  min-width: 60px;
+}
+.state-value {
+  width: 40px;
+  min-width: 40px;
+  input {
+    text-align: center;
+  }
+}
+.trash-delete {
+  padding: 0 6px;
 }
 </style>

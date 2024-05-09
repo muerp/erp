@@ -1,13 +1,18 @@
 <template>
   <div class="page w-full h-full" :class="{ 'full-screen': isFullscreen }">
     <el-row type="flex" class="w-full no-wrap overflow-hidden" style="height: 100%">
-      <mu-dragable init-width="200" style="border-right: 1px solid #999" :min-width="160" v-show="showLeft">
+      <mu-dragable
+        init-width="200"
+        style="border-right: 1px solid #999"
+        :min-width="160"
+        v-show="showLeft"
+      >
         <el-row align="middle" draggable="true" justify="center" class="mt-1 mb-1">
-          <el-text size="large" align="center">我的菜单</el-text>
+          <el-text size="small" align="center">我的菜单</el-text>
         </el-row>
         <el-scrollbar>
           <mu-tree
-            class="erp-loading"
+            class-name="erp-loading small-tree"
             :list="menuStore.menus"
             v-loading="menuStore.loadingState === LoadingState.loading"
             element-loading-text="加载中..."
@@ -33,7 +38,7 @@
           </mu-tree>
         </el-scrollbar>
       </mu-dragable>
-      <editor-content v-model:is-fullscreen="isFullscreen" @change-sidebar="onSidebar"/>
+      <editor-content v-model:is-fullscreen="isFullscreen" @change-sidebar="onSidebar" />
     </el-row>
   </div>
 </template>
@@ -97,6 +102,13 @@ const onSidebar = (show: any) => {
 .erp-loading {
   .el-loading-spinner .circular {
     --el-loading-spinner-size: 32px;
+  }
+}
+.small-tree {
+  font-size: 13px;
+  .svg-icon {
+    width: 16px;
+    height: 16px;
   }
 }
 </style>
