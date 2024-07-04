@@ -127,6 +127,17 @@ export const testMenus: any[] = [
         ]
     },
     {
+        icon: 'tool',
+        title: '工具管理',
+        children: [
+            {
+                icon: 'tree-table',
+                title: 'Svg工具',
+                path: '/dd',
+            },
+        ]
+    },
+    {
         icon: 'group',
         title: '',
         children: [
@@ -196,6 +207,17 @@ export const testNavs: any[] = [
                 icon: 'tree-table',
                 title: '菜单设置',
                 path: '/dd',
+            },
+        ]
+    },
+    {
+        icon: 'tool',
+        title: '工具管理',
+        children: [
+            {
+                icon: 'tree-table',
+                title: 'Svg工具',
+                path: '/tool/svg',
             },
         ]
     },

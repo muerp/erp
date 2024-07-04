@@ -53,6 +53,15 @@ const routes = [
                 },
                 component: () => import('../pages/edit/EditorPage.vue')
             },
+            {
+                name: 'SvgPage',
+                path: '/tool/svg',
+                noAuth: true,
+                meta: {
+                    title: 'Svg工具',
+                },
+                component: () => import('../pages/tools/SvgPage.vue')
+            }
         ]
     }
 ];

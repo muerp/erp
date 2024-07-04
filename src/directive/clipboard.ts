@@ -22,7 +22,7 @@ export default {
                     message: "复制成功",
                     type: "success",
                     showClose: false,
-                    duration: 1000000,
+                    duration: 1000,
                 });
                 callback && callback(e)
             })

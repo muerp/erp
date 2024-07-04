@@ -35,3 +35,24 @@ export const isUrl = (url: string) => {
 export const isBase64 = (url: string) => {
     return /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/.test(url);
 }
+
+export const svgToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsText(file);
+        fileReader.onload = (e: any) => {
+          let svg = e.target.result;
+          svg = svg.replace(/[\r\n]/g, "");
+          svg = svg.replace(/\s+/g, " ");
+          const from = svg.indexOf("<svg");
+          const to = svg.indexOf("/svg>");
+          const result = svg.substring(from, to) + "/svg>";
+          const base64 = 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(result);
+          resolve(base64);
+        };
+        fileReader.onerror = function () {
+            reject(new Error("文件读取出错，请检查该文件"));
+        };
+    })
+    
+}
