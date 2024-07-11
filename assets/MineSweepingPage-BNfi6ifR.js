@@ -1,1 +1,0 @@
-import{_ as s,o as c,c as t,q as e}from"./index-B5PT-rZe.js";const a={},n={class:"page w-full h-full iframe-page"},i=e("div",{className:"device-inner w-full h-full"},[e("iframe",{title:"iframe",src:"/minesweeper/index.html"})],-1),o=[i];function r(l,_){return c(),t("div",n,o)}const d=s(a,[["render",r]]);export{d as default};
