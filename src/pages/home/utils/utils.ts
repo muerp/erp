@@ -40,7 +40,7 @@ export const toZip = async (files: any[]) => {
 }
 export const fileMD5 = (file: any) => {
     return new Promise((resolve, reject) => {
-        let blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+        let blobSlice = File.prototype.slice, //|| File.prototype.mozSlice || File.prototype.webkitSlice,
             chunkSize = 2097152,                             // 切片读取文件
             chunks = Math.ceil(file.size / chunkSize),
             currentChunk = 0,
