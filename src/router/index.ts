@@ -61,6 +61,24 @@ const routes = [
                     title: 'Svg工具',
                 },
                 component: () => import('../pages/tools/SvgPage.vue')
+            },
+            {
+                name: 'ImageCompress',
+                path: '/tool/imagecompress',
+                noAuth: true,
+                meta: {
+                    title: '图片压缩',
+                },
+                component: () => import('../pages/tools/ImageCompressPage.vue')
+            },
+            {
+                name: 'MineSweepingPage',
+                path: '/game/minesweeping',
+                noAuth: true,
+                meta: {
+                    title: '休息时刻',
+                },
+                component: () => import('../pages/game/MineSweepingPage.vue')
             }
         ]
     }

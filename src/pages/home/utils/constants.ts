@@ -204,7 +204,7 @@ export const testNavs: any[] = [
         title: '安全管理',
         children: [
             {
-                icon: 'tree-table',
+                icon: 'tree1',
                 title: '菜单设置',
                 path: '/dd',
             },
@@ -215,9 +215,25 @@ export const testNavs: any[] = [
         title: '工具管理',
         children: [
             {
-                icon: 'tree-table',
+                icon: 'moon',
                 title: 'Svg工具',
                 path: '/tool/svg',
+            },
+            {
+                icon: 'moon',
+                title: '图片压缩',
+                path: '/tool/imagecompress',
+            },
+        ]
+    },
+    {
+        icon: 'col',
+        title: '休息时刻',
+        children: [
+            {
+                icon: 'clock',
+                title: '扫雷',
+                path: '/game/minesweeping',
             },
         ]
     },
