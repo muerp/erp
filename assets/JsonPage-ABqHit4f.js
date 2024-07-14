@@ -1,1 +1,0 @@
-import{d as e,o as a,c as s,a as o,Q as n}from"./index-CuWS8quN.js";const t={class:"page w-full h-full json-page"},p=e({__name:"JsonPage",setup(c){return(_,l)=>(a(),s("div",t,[o(n,{lang:"json"})]))}});export{p as default};
