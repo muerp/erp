@@ -14,7 +14,7 @@
     >
       <el-table-column
         v-if="editorStore.tables.select"
-        :prop="{key: '_checkbox'} as any"
+        prop="_checkbox"
         type="selection"
         :label-class-name="
           editorStore.curEditorItem &&
@@ -28,7 +28,7 @@
       />
       <el-table-column
         v-for="header in headers"
-        :prop="header"
+        :prop="header.key"
         :label-class-name="
           editorStore.curEditorItem &&
           editorStore.curEditorItem.type === 'table-cell' &&
@@ -147,8 +147,8 @@ const onClickHeader = (cell: any, e: any) => {
   }
 }
 .cell-active-first {
-    &:before {
-      border-left-width: 3px !important;
-    }
+  &:before {
+    border-left-width: 3px !important;
+  }
 }
 </style>

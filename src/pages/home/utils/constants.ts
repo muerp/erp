@@ -224,6 +224,11 @@ export const testNavs: any[] = [
                 title: '图片压缩',
                 path: '/tool/imagecompress',
             },
+            {
+                icon: 'moon',
+                title: 'JSON工具',
+                path: '/tool/json',
+            },
         ]
     },
     {

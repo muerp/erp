@@ -24,9 +24,9 @@ import { inject, onUnmounted, ref, watch } from "vue";
 import { useDraggable } from "./useDraggable";
 
 const props: any = defineProps({
-  width: { type: String, default: "" },
+  width: { type: [String, Number], default: "" },
   index: { type: [Number, String], default: 0 },
-  item: { type: Object, require: true },
+  item: { type: Object, require: undefined },
   activeItem: { type: Object, default: undefined },
   checkFrame: { type: Boolean, default: false },
 });

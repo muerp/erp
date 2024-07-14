@@ -2,7 +2,7 @@
   <div class="page w-full h-full" :class="{ 'full-screen': isFullscreen }">
     <el-row type="flex" class="w-full no-wrap overflow-hidden" style="height: 100%">
       <mu-dragable
-        init-width="200"
+        :init-width="200"
         style="border-right: 1px solid #999"
         :min-width="160"
         v-show="showLeft"

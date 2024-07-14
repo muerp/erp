@@ -6,7 +6,7 @@
       'drag-collapse': isCollapse,
       loading: store.loadingState === LoadingState.loading,
     }"
-    init-width="200"
+    :init-width="200"
     :min-width="200"
     :drag-enabled="!isCollapse"
   >

@@ -107,6 +107,8 @@ const addFiles = (files: File[]) => {
         });
         const item = list.value[list.value.length - 1];
         if (item.valid) {
+          console.log('-------', item);
+          // compress(file)
           // this.$axios.upload(file, (e) => {
           //   item.progress = parseInt(e.loaded / e.total * 100);
           // }).then(({len, buffer}) => {

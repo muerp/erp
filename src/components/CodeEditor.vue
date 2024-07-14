@@ -11,11 +11,11 @@ const props = defineProps({
 defineOptions({
   name: "CodeEditor",
 });
-const emit = defineEmits(['change'])
+const emit = defineEmits(["change"]);
 const editorRef = ref();
 onMounted(() => {
   const editor = monaco.editor.create(editorRef.value, {
-    value: '', // 编辑器的值
+    value: "", // 编辑器的值
     language: props.lang || "json", //语言
     theme: "vs-dark", // 编辑器主题：vs, hc-black, or vs-dark
     accessibilitySupport: "off",
@@ -25,7 +25,7 @@ onMounted(() => {
     // overviewRulerBorder: false,
     // scrollBeyondLastLine: false,
     // selectOnLineNumbers: false,
-    lineNumbers: 'off',
+    lineNumbers: "off",
     minimap: {
       // 关闭代码缩略图
       enabled: false, // 是否启用预览图
@@ -35,22 +35,35 @@ onMounted(() => {
       insertSpace: true, // 在行注释标记之后和块注释标记内插入一个空格。默认为真。
     },
   });
-  if (props.lang === 'json') {
-    const formattedText = JSON.stringify(JSON.parse(props.value), null, 2);
-    editor.setValue(formattedText);
+  if (props.lang === "json" && props.value) {
+    try {
+      const formattedText = JSON.stringify(JSON.parse(props.value), null, 2);
+      editor.setValue(formattedText);
+    } catch (e) {
+      editor.setValue(props.value);
+    }
   }
 
-    editor.onDidChangeModelContent(() => {
-        if (props.lang === 'json') {
-            try {
-                emit('change', JSON.parse(editor.getValue()));
-            } catch(e) {
-                //
-            }
-        } else {
-            emit('change', editor.getValue());
+  editor.onDidChangeModelContent(() => {
+    if (props.lang === "json") {
+      try {
+        if (editor) {
+          editor.getAction('editor.action.formatDocument')?.run()
         }
-    })
+        
+        emit("change", JSON.parse(editor.getValue()));
+      } catch (e) {
+        //
+      }
+    } else {
+      emit("change", editor.getValue());
+    }
+  });
 });
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.code-editor {
+  width: 100%;
+  height: 100%;
+}
+</style>

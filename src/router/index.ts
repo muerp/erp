@@ -72,6 +72,15 @@ const routes = [
                 component: () => import('../pages/tools/ImageCompressPage.vue')
             },
             {
+                name: 'JsonPage',
+                path: '/tool/json',
+                noAuth: true,
+                meta: {
+                    title: 'JSON工具',
+                },
+                component: () => import('../pages/tools/JsonPage.vue')
+            },
+            {
                 name: 'MineSweepingPage',
                 path: '/game/minesweeping',
                 noAuth: true,
