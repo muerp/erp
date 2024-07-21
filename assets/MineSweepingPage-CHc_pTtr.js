@@ -1,0 +1,1 @@
+import{_ as s,o as c,c as t,q as e}from"./index-DD6yxBxZ.js";const a={},n={class:"page w-full h-full iframe-page"},r=e("div",{className:"device-inner w-full h-full"},[e("iframe",{title:"iframe",src:"/erp/minesweeper/index.html"})],-1),i=[r];function o(l,_){return c(),t("div",n,i)}const d=s(a,[["render",o]]);export{d as default};
