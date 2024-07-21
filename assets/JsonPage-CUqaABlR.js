@@ -1,1 +1,0 @@
-import{d as e,o as a,c as s,a as n,Q as o}from"./index-DD6yxBxZ.js";const t={class:"page w-full h-full json-page"},p=e({__name:"JsonPage",setup(l){return(c,_)=>(a(),s("div",t,[n(o,{lang:"json",value:JSON.stringify({json:"json数据"})},null,8,["value"])]))}});export{p as default};
