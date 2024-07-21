@@ -94,7 +94,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory('/erp'),
+    history: createWebHistory(),
     routes
 })
 
