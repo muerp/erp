@@ -1,0 +1,1 @@
+import{d as e,a,c as s,b as n,R as o}from"./index-BVpSb869.js";const t={class:"page w-full h-full json-page"},p=e({__name:"JsonPage",setup(l){return(c,_)=>(a(),s("div",t,[n(o,{lang:"json",value:JSON.stringify({json:"json数据"})},null,8,["value"])]))}});export{p as default};

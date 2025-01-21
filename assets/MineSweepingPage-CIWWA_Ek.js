@@ -1,0 +1,1 @@
+import{_ as s,a as t,c as a,q as e}from"./index-BVpSb869.js";const c={},n={class:"page w-full h-full iframe-page"},r=e("div",{className:"device-inner w-full h-full"},[e("iframe",{title:"iframe",src:"https://www.ranjun.work/minesweeper/index.html"})],-1),i=[r];function o(l,_){return t(),a("div",n,i)}const d=s(c,[["render",o]]);export{d as default};
