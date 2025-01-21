@@ -6,14 +6,16 @@
           <el-text size="large" truncated>MU ERP 管理系统 </el-text>
         </el-row>
         <el-row align="middle">
-          <Check width="16px" class="mr-1" height="16px" /><el-text size="small"
-            >他强任你强，清风拂山岗
-          </el-text>
+          <Check width="16px" class="mr-1" height="16px" />
+          <el-text size="small">他强任你强，清风拂山岗 </el-text>
         </el-row>
         <el-row align="middle">
-          <Check width="16px" class="mr-1" height="16px" /><el-text size="small"
-            >他自狠来他自恶，我自一口真气足
-          </el-text>
+          <Check width="16px" class="mr-1" height="16px" />
+          <el-text size="small">他自狠来他自恶，我自一口真气足 </el-text>
+        </el-row>
+        <el-row align="middle">
+          <Check width="16px" class="mr-1" height="16px" />
+          <el-text size="small"> 测试使用，任意输入账号密码符合规定均可登录 </el-text>
         </el-row>
       </el-col>
       <el-col
@@ -30,6 +32,9 @@
         </el-row>
         <el-row class="mb-2">
           <el-text> 海纳百川，有容乃大 </el-text>
+          <el-text size="small" style="color: red">
+            测试使用，任意输入账号密码符合规定均可登录
+          </el-text>
         </el-row>
         <el-form>
           <el-form-item>
@@ -111,14 +116,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { ElNotification } from "element-plus";
 import { randomNumber, StorageKey } from "../../utils";
 import { useRouter } from "vue-router";
 import Storage from "../../utils/storage";
 const form = ref({
-  account: "",
-  password: "",
+  account: "test",
+  password: "test123456",
   code: "",
 });
 const errorForm = ref({
@@ -133,8 +138,12 @@ const code = ref(randomNumber(4));
 const onHidePassword = () => {
   hidePassword.value = !hidePassword.value;
 };
+onMounted(()=>{
+  form.value.code = code.value;
+})
 const onChangeCode = () => {
   code.value = randomNumber(4);
+  form.value.code = code.value;
 };
 function verify() {
   if (!form.value.account) {

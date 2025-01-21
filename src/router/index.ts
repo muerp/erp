@@ -63,6 +63,15 @@ const routes = [
                 component: () => import('../pages/tools/SvgPage.vue')
             },
             {
+                name: 'ImagePage',
+                path: '/tool/image2base64',
+                noAuth: true,
+                meta: {
+                    title: 'Image工具',
+                },
+                component: () => import('../pages/tools/ImagePage.vue')
+            },
+            {
                 name: 'ImageCompress',
                 path: '/tool/imagecompress',
                 noAuth: true,

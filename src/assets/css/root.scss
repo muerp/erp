@@ -7,6 +7,19 @@ body,
 html {
     overflow: hidden;
 }
+.erp-main {
+    height: calc(100% - 32px);
+}
+.beian {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #999;
+    line-height: 32px;
+    font-size: 12px;
+    a {
+        color: #fff;
+    }
+}
 
 :root {
     --el-text-color-regular: #999;

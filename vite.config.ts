@@ -6,7 +6,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 console.log('monacoEditorPlugin', monacoEditorPlugin)
 export default defineConfig({
-  base: './',
+  // base: './',
   // base: '/erp',// 强制预构建插件包
 //   optimizeDeps: {
 //    include: [

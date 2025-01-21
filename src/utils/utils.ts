@@ -56,3 +56,16 @@ export const svgToBase64 = (file: File): Promise<string> => {
     })
     
 }
+export const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = (e: any) => {
+          const base64 = e.target.result;
+          resolve(base64);
+        };
+        fileReader.onerror = function () {
+            reject(new Error("文件读取出错，请检查该文件"));
+        };
+    })
+}

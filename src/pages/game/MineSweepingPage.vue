@@ -1,7 +1,7 @@
 <template>
   <div class="page w-full h-full iframe-page">
     <div className="device-inner w-full h-full">
-      <iframe title="iframe" src="/erp/minesweeper/index.html" />
+      <iframe title="iframe" src="https://www.ranjun.work/minesweeper/index.html" />
     </div>
   </div>
 </template>

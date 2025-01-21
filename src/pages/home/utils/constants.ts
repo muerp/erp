@@ -221,6 +221,11 @@ export const testNavs: any[] = [
             },
             {
                 icon: 'moon',
+                title: '图片工具',
+                path: '/tool/image2base64',
+            },
+            {
+                icon: 'moon',
                 title: '图片压缩',
                 path: '/tool/imagecompress',
             },
